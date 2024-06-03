@@ -1,8 +1,15 @@
 [package]
-name = "template-rust"
-version = "0.1.0"
+name = "fingerprint"
+version = "1.0.1"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
+getset = "0.1.2"
+hex = "0.4.3"
+iter-read = "0.3.1"
+serde = { version = "1.0.140", features = ["derive"] }
+thiserror = "1.0.31"
+sha2 = "0.10.6"
+
+[dev-dependencies]
+typed-builder = "0.10.0"

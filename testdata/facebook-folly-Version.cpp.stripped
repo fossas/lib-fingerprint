@@ -1,0 +1,4 @@
+#include <folly/VersionCheck.h>
+namespace folly { namespace detail {
+FOLLY_VERSION_CHECK(folly, FOLLY_VERSION)
+}}
