@@ -1,15 +1,32 @@
 [package]
 name = "fingerprint"
-version = "1.0.1"
+version = "2.0.0"
 edition = "2021"
+
+[features]
+default = ["fp-content-serialize-hex"]
+
+# Serializes fingerprint content using hex encoding.
+# This is the default encoding since it is what most services expect.
+fp-content-serialize-hex = ["hex"]
+
+# Serializes fingerprint content using base64 encoding.
+#
+# If this is specified along with `fp-content-serialize-hex`,
+# the standard serde operations prefer `fp-content-serialize-hex`.
+fp-content-serialize-base64 = ["base64"]
+base64 = ["dep:base64"]
+hex = ["dep:hex"]
 
 [dependencies]
 getset = "0.1.2"
-hex = "0.4.3"
 iter-read = "0.3.1"
 serde = { version = "1.0.140", features = ["derive"] }
 thiserror = "1.0.31"
 sha2 = "0.10.6"
+hex = { version = "0.4.3", optional = true }
+base64 = { version = "0.22.1", optional = true }
+typed-builder = "0.10.0"
 
 [dev-dependencies]
-typed-builder = "0.10.0"
+pretty_assertions = "1.4.0"

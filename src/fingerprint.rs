@@ -3,12 +3,13 @@ use std::io::{self, BufRead, BufReader, Cursor, Read, Write};
 use iter_read::IterRead;
 use sha2::{Digest, Sha256};
 
-use crate::{stream::ConvertCRLFToLF, CommentStrippedSHA256, Error, Fingerprint, RawSHA256};
+use crate::{stream::ConvertCRLFToLF, Error, Fingerprint, Kind};
 
-/// Fingerprint the file using the [`RawSHA256`] kind.
-pub fn raw<R: BufRead>(stream: &mut R) -> Result<Fingerprint<RawSHA256>, Error> {
+mod binary;
+
+pub fn raw<R: BufRead>(stream: &mut R) -> Result<Fingerprint, Error> {
     // Read the start of the stream, and decide whether to treat the rest of the stream as binary based on that.
-    let BinaryCheck { read, is_binary } = content_is_binary(stream)?;
+    let binary::Check { is_binary, read } = binary::Check::content(stream)?;
 
     // Chain the part of the stream already read to evaluate binary along with the rest of the stream.
     let mut stream = Cursor::new(read).chain(stream);
@@ -19,15 +20,12 @@ pub fn raw<R: BufRead>(stream: &mut R) -> Result<Fingerprint<RawSHA256>, Error> 
         content_text(&mut stream, &mut hasher)?;
     }
 
-    Fingerprint::from_digest(hasher)
+    Fingerprint::from_digest(Kind::RAW_SHA256, hasher)
 }
 
-/// Fingerprint the file using the [`CommentStrippedSHA256`] kind.
-pub fn comment_stripped<R: BufRead>(
-    stream: &mut R,
-) -> Result<Option<Fingerprint<CommentStrippedSHA256>>, Error> {
+pub fn comment_stripped<R: BufRead>(stream: &mut R) -> Result<Option<Fingerprint>, Error> {
     // Read the start of the stream, and decide whether to treat the rest of the stream as binary based on that.
-    let BinaryCheck { read, is_binary } = content_is_binary(stream)?;
+    let binary::Check { is_binary, read } = binary::Check::content(stream)?;
     if is_binary {
         return Ok(None);
     }
@@ -36,7 +34,11 @@ pub fn comment_stripped<R: BufRead>(
     let mut stream = Cursor::new(read).chain(stream);
     let mut hasher = Sha256::new();
     match content_stripped(&mut stream, &mut hasher) {
-        Ok(_) => Some(Fingerprint::from_digest(hasher)).transpose(),
+        Ok(_) => Some(Fingerprint::from_digest(
+            Kind::COMMENT_STRIPPED_SHA256,
+            hasher,
+        ))
+        .transpose(),
         Err(err) => {
             // The `io::Error` type is opaque.
             // Handle the case of attempting to comment strip a binary file.
@@ -49,27 +51,8 @@ pub fn comment_stripped<R: BufRead>(
     }
 }
 
-/// The result of checking a file for whether it is binary.
-pub(crate) struct BinaryCheck {
-    pub(crate) read: Vec<u8>,
-    pub(crate) is_binary: bool,
-}
-
-/// Inspect the file to determine if it is binary.
-///
-/// Uses the same method as git: "is there a zero byte in the first 8000 bytes of the file"
-pub(crate) fn content_is_binary<R: Read>(stream: &mut R) -> Result<BinaryCheck, io::Error> {
-    let mut buf = Vec::new();
-    stream.take(8000).read_to_end(&mut buf)?;
-    let is_binary = buf.contains(&0);
-    Ok(BinaryCheck {
-        read: buf,
-        is_binary,
-    })
-}
-
 /// Reads the exact contents of a binary file without modification.
-pub(crate) fn content_binary(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
+fn content_binary(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
     io::copy(stream, w)?;
     Ok(())
 }
@@ -81,7 +64,7 @@ pub(crate) fn content_binary(stream: &mut impl BufRead, w: &mut impl Write) -> R
 /// - `git` implementations on Windows typically check out files with `\r\n` line endings,
 ///   while *nix checks them out with `\n`.
 ///   To be platform independent, any `\r\n` byte sequences found are converted to a single `\n`.
-pub(crate) fn content_text(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
+fn content_text(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
     let stream = BufReader::new(stream).bytes().crlf_to_lf().fuse();
     io::copy(&mut IterRead::new(stream), w)?;
     Ok(())
@@ -100,7 +83,7 @@ pub(crate) fn content_text(stream: &mut impl BufRead, w: &mut impl Write) -> Res
 ///   - This function does not check for escaped comments.
 /// - Any sequence of multiple contiguous `\n` bytes are collapsed to a single `\n` byte.
 /// - The final `\n` byte is removed from the end of the stream if present.
-pub(crate) fn content_stripped(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
+fn content_stripped(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
     let mut buffered_output_line = String::new();
     let mut is_multiline_active = false;
 
@@ -147,7 +130,7 @@ fn clean_line(line: String, is_multiline_active: bool) -> (String, bool) {
 
 #[cfg(test)]
 mod tests {
-    //! Tests for internal logic.
+    use io::Cursor;
 
     use super::*;
 

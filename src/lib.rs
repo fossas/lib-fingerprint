@@ -1,40 +1,22 @@
-//! A fingerprint is a unique identifier for a file's contents.
-//!
-//! Fingerprints come in multiple "kinds", which are represented by textual identifiers.
-//! Fingerprints themselves are represented as binary blobs.
-//!
-//! Fingerprint kinds MUST maintain exact implementation compatibility; once the algorithm for a given kind
-//! has been created and its fingerprints have been crawled, it can't be changed. If a change is needed,
-//! that has to be a new kind of fingerprint.
-//!
-//! This rule means that we start out with two kinds that existed prior to this library being created,
-//! which have specific rules about how to compute the fingerprint, and specific text identifiers.
-//!
-//! For more information, refer to the documentation for the types below.
-
+#![doc = include_str!("../README.md")]
 #![deny(unsafe_code)]
 #![deny(missing_docs)]
 #![warn(rust_2018_idioms)]
 #![deny(clippy::unwrap_used)]
 
 use std::{
-    fmt::Display,
+    collections::HashMap,
     fs::File,
-    io::{self, BufRead, BufReader, Seek},
-    marker::PhantomData,
+    io::{self, BufRead, BufReader, Cursor, Seek},
     path::Path,
 };
 
-use crate::fingerprint::BinaryCheck;
 use getset::Getters;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use thiserror::Error;
-#[cfg(test)]
-use typed_builder::TypedBuilder;
 
 mod fingerprint;
-pub mod serialize;
 mod stream;
 
 /// Errors that may be encountered during fingerprinting.
@@ -51,90 +33,96 @@ pub enum Error {
 /// has been created and its fingerprints have been crawled, it can't be changed. If a change is needed,
 /// that has to be a new kind of fingerprint. Similarly, the text representation for a given algorithm
 /// cannot change either: some services assume certain things about the fingerprints that we cannot easily change
-/// (for example, the VSI Forensics Service assumes all files have a `sha_256` fingerprint).
+/// (for example, Sherlock assumes all files have a `sha_256` fingerprint).
 ///
 /// This is because fingerprints form the backbone of how VSI operates:
-/// - FOSSA CLI creates them.
-/// - The VSI Forensics Service assumes certain things about them.
-/// - The VSI Cloud Store assumes certain things about them.
-/// - The VSI Cloud Store's Crawlers create them.
-/// - Crawlers and FOSSA CLI must create them in the same way.
-/// - ... and all of this has to be compatible with the fingerprinting in the MVP store, which formed the initial basis of VSI.
+/// - FOSSA CLI and Azathoth create them.
+/// - Sherlock and Multivac assume certain things about them.
+/// - All implementations must create them in the same way and have the same assumptions.
 ///
-/// All valid fingerprint kinds implement this trait.
+/// For this reason, new kinds cannot be created outside of this library,
+/// and new kinds cannot be created at runtime.
 ///
-/// This trait is sealed, indicating nothing outside this module may implement it.
+/// ## Sparkle compatibility
 ///
-/// ### Future work
+/// Sparkle itself supports user-created kinds, but this library is a "user";
+/// in other words while _Sparkle_ supports arbitrary kinds _this library_ defines (some of) those kinds.
 ///
-/// The current implementation of `Kind` causes an issue when we want to actually send kind information
-/// across a serialization boundary, because `Kind`s aren't concrete and therefore aren't
-/// generally serializable.
+/// If you want to use other kinds, prefer to:
+/// - Update this library with the new kind(s) (ideal).
+/// - Implement the new kind manually in your application (acceptable if the kind is a one-off).
 ///
-/// Specifically, this is an issue for `FinalizeRevision` and `CheckRevision` methods in the VSI Cloud Store,
-/// where it's not simple to send a list of `Kind`s used to fingerprint a set of files,
-/// and it's not simple to then retreive that list from the API.
+/// ## Deserializing
 ///
-/// Instead, for `FinalizeRevision`, clients are forced to:
-/// - Know what kinds of fingerprints are possible, separately.
-/// - Manually call `.to_string` on those kinds to get a list of kinds used.
-/// - Send them as opaque strings.
-/// And for `CheckRevision`, clients are forced to:
-/// - Manually compare the API result (which is a set of opaque strings) against known kinds, using the `to_string` method.
-/// And the server is required to treat all this as opaque strings.
-///
-/// To make this less error prone, this is all handled in this library under the `serialize` module,
-/// and it works for now so it's not a massive problem. But if we have ideas for how to improve this for the future,
-/// we should do them.
-pub trait Kind: private::Sealed {}
+/// When deserializing this type, the deserialized value must match a known kind;
+/// otherwise a deserialization error is returned.
+#[derive(Copy, Clone, Eq, PartialEq, Hash, Debug, Serialize)]
+pub struct Kind(&'static str);
 
-/// Represents a fingerprint derived by hashing the raw contents of a file with the SHA256 algorithm.
-///
-/// This is the default kind of fingerprint, and the kind of fingerprint with the maximal comparison signal,
-/// as the raw SHA256 hash of two files matching indicates that the two files are exactly the same content.
-/// It's also the fingerprint kind that works for literally all kinds of files, whereas other fingerprint kinds
-/// generally require specific circumstances: `CommentStrippedSHA256` requires that the file is text, and
-/// hypothetical future fingerprint kinds such as something based on an AST would require that the file is source code.
-///
-/// This fingerprint kind has been finalized and may not change (except to fix a bug).
-#[derive(Clone, Eq, PartialEq, Debug, Default, Hash, Serialize, Deserialize)]
-pub struct RawSHA256;
-
-impl private::Sealed for RawSHA256 {}
-impl Kind for RawSHA256 {}
-
-impl Display for RawSHA256 {
+impl std::fmt::Display for Kind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "sha_256")
+        write!(f, "{}", self.0)
     }
 }
 
-/// Represents a fingerprint derived by hashing the contents of a file with the SHA256 algorithm
-/// after performing basic C-style comment stripping.
-///
-/// This fingerprint kind has been finalized and may not change (except to fix a bug).
-#[derive(Clone, Eq, PartialEq, Debug, Default, Hash, Serialize, Deserialize)]
-pub struct CommentStrippedSHA256;
+impl Kind {
+    /// Represents a fingerprint derived by hashing the raw contents of a file with the SHA256 algorithm.
+    ///
+    /// This is the default kind of fingerprint, and the kind of fingerprint with the maximal comparison signal,
+    /// as the raw SHA256 hash of two files matching indicates that the two files are exactly the same content.
+    /// It's also the fingerprint kind that works for literally all kinds of files, whereas other fingerprint kinds
+    /// generally require specific circumstances: `CommentStrippedSHA256` requires that the file is text, and
+    /// hypothetical future fingerprint kinds such as something based on an AST would require that the file is source code.
+    pub const RAW_SHA256: Kind = Kind("sha_256");
 
-impl private::Sealed for CommentStrippedSHA256 {}
-impl Kind for CommentStrippedSHA256 {}
+    /// Represents a fingerprint derived by hashing the contents of a file with the SHA256 algorithm
+    /// after performing basic C-style comment stripping.
+    pub const COMMENT_STRIPPED_SHA256: Kind = Kind("comment_stripped:sha_256");
 
-impl Display for CommentStrippedSHA256 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "comment_stripped:sha_256")
+    /// List all built in kinds.
+    pub fn enumerate() -> impl Iterator<Item = Self> {
+        [Self::RAW_SHA256, Self::COMMENT_STRIPPED_SHA256].into_iter()
+    }
+
+    /// View the kind as its underlying bytes.
+    pub fn as_bytes(&self) -> &[u8] {
+        self.0.as_bytes()
+    }
+}
+
+impl<'de> Deserialize<'de> for Kind {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let parsed = String::deserialize(deserializer)?;
+        for kind in Self::enumerate() {
+            if kind.0 == parsed {
+                return Ok(kind);
+            }
+        }
+
+        let kinds = Self::enumerate().collect::<Vec<_>>();
+        Err(serde::de::Error::custom(format!(
+            "kind '{parsed}' is not a supported kind (supported kinds: {kinds:?})"
+        )))
     }
 }
 
 /// An array of bytes representing a fingerprint's content.
-///
-/// Must be encoded as hex to be compatible with the FOSSA backend.
-#[derive(Clone, Eq, PartialEq, Hash, Debug, Default)]
-pub struct Blob(Vec<u8>);
+#[derive(Clone, Eq, PartialEq, Hash, Default)]
+pub struct Content(Vec<u8>);
 
-impl Blob {
-    fn from_digest<D: Digest>(digest: D) -> Result<Blob, Error> {
+impl Content {
+    /// Create a new instance from raw bytes.
+    pub fn new(bytes: impl Into<Vec<u8>>) -> Self {
+        Self(bytes.into())
+    }
+
+    /// Create a new instance from a hash digest.
+    pub fn from_digest<D: Digest>(digest: D) -> Result<Self, Error> {
         let buf = digest.finalize().as_slice().to_vec();
-        Ok(Blob(buf))
+        Ok(Self(buf))
     }
 
     /// Reference the bytes inside the blob.
@@ -143,7 +131,46 @@ impl Blob {
     }
 }
 
-impl Serialize for Blob {
+#[cfg(feature = "fp-content-serialize-hex")]
+impl std::fmt::Display for Content {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", hex::encode(&self.0))
+    }
+}
+
+#[cfg(all(
+    not(feature = "fp-content-serialize-hex"),
+    feature = "fp-content-serialize-base64"
+))]
+impl std::fmt::Display for Content {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use base64::{prelude::*, Engine};
+        write!(f, "{}", &BASE64_STANDARD.encode(&self.0))
+    }
+}
+
+#[cfg(any(
+    feature = "fp-content-serialize-hex",
+    feature = "fp-content-serialize-base64"
+))]
+impl std::fmt::Debug for Content {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self}")
+    }
+}
+
+#[cfg(all(
+    not(feature = "fp-content-serialize-hex"),
+    not(feature = "fp-content-serialize-base64")
+))]
+impl std::fmt::Debug for Content {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_tuple("Content").field(&self.0).finish()
+    }
+}
+
+#[cfg(feature = "fp-content-serialize-hex")]
+impl Serialize for Content {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
@@ -152,7 +179,8 @@ impl Serialize for Blob {
     }
 }
 
-impl<'de> Deserialize<'de> for Blob {
+#[cfg(feature = "fp-content-serialize-hex")]
+impl<'de> Deserialize<'de> for Content {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
@@ -163,236 +191,240 @@ impl<'de> Deserialize<'de> for Blob {
     }
 }
 
-/// Fingerprints need to be hashable by their `Kind` and `Content` values
-/// for the VSI Cloud Store to properly interact with them.
-pub trait Hashable {
-    /// Create a new hash from a fingerprint kind and a fingerprint.
-    fn to_hash(&self) -> Vec<u8>;
-}
-
-/// An opaque, deterministic value for the file's contents.
-/// If two fingerprints are the same, the contents of the files used to create the fingerprints are the same.
-#[derive(Clone, Eq, PartialEq, Hash, Default, Debug, Getters)]
-#[cfg_attr(test, derive(TypedBuilder))]
-#[getset(get = "pub")]
-pub struct Fingerprint<K: Kind> {
-    #[getset(skip)]
-    kind: PhantomData<K>,
-    /// The content of the blob.
-    content: Blob,
-}
-
-impl<K: Kind> Serialize for Fingerprint<K> {
+#[cfg(all(
+    not(feature = "fp-content-serialize-hex"),
+    feature = "fp-content-serialize-base64"
+))]
+impl Serialize for Content {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
-        self.content.serialize(serializer)
+        use base64::{prelude::*, Engine};
+        serializer.serialize_str(&BASE64_STANDARD.encode(&self.0))
     }
 }
 
-impl<'de, K: Kind> Deserialize<'de> for Fingerprint<K> {
+#[cfg(all(
+    not(feature = "fp-content-serialize-hex"),
+    feature = "fp-content-serialize-base64"
+))]
+impl<'de> Deserialize<'de> for Content {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        Ok(Self {
-            content: Blob::deserialize(deserializer)?,
-            kind: PhantomData {},
-        })
+        use base64::{prelude::*, Engine};
+        let s = String::deserialize(deserializer)?;
+        let b = BASE64_STANDARD
+            .decode(s)
+            .map_err(serde::de::Error::custom)?;
+        Ok(Self(b))
     }
 }
 
-impl<K> Fingerprint<K>
-where
-    K: Kind,
-{
-    fn new(content: Blob) -> Self {
+/// Use the `kind` and `content` to derive a hash per unique fingerprint.
+pub trait UniqueHash {
+    /// Uniquely identify the fingerprint as a hash of its kind and content.
+    fn unique_hash(&self) -> Vec<u8>;
+}
+
+/// An opaque, deterministic value for the file's contents.
+/// If two fingerprints are the same, the contents of the files used to create the fingerprints are the same.
+#[derive(Clone, Eq, PartialEq, Hash, Debug, Getters)]
+#[getset(get = "pub")]
+pub struct Fingerprint {
+    /// The method used to generate a fingerprint.
+    kind: Kind,
+
+    /// The deterministic identifier for the fingerprint.
+    content: Content,
+}
+
+impl Fingerprint {
+    /// Create a new instance.
+    pub fn new(kind: impl Into<Kind>, content: impl Into<Content>) -> Self {
         Self {
-            content,
-            kind: PhantomData {},
+            kind: kind.into(),
+            content: content.into(),
         }
     }
 
-    fn from_digest<D: Digest>(digest: D) -> Result<Self, Error> {
-        let content = Blob::from_digest(digest)?;
-        Ok(Fingerprint::new(content))
+    /// Given a desired [`Kind`], fingerprint the content of the provided stream
+    /// with the fingerprinter for that kind.
+    ///
+    /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
+    /// returns `Ok(None)`.
+    ///
+    /// ## Panic
+    ///
+    /// If a [`Kind`] is provided that is not accounted for in this function, it panicks.
+    /// This should not happen in normal program execution since kinds cannot be created
+    /// outside of this library, so this situation is automatically a bug in this library.
+    pub fn generate_stream(
+        kind: Kind,
+        stream: &mut impl BufRead,
+    ) -> Result<Option<Fingerprint>, Error> {
+        match kind {
+            Kind::RAW_SHA256 => fingerprint::raw(stream).map(Some),
+            Kind::COMMENT_STRIPPED_SHA256 => fingerprint::comment_stripped(stream),
+            unknown => panic!("unsupported kind: {unknown}"),
+        }
+    }
+
+    /// Given a desired [`Kind`], fingerprint the content of the specified file
+    /// with the fingerprinter for that kind.
+    ///
+    /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
+    /// returns `Ok(None)`.
+    ///
+    /// ## Panic
+    ///
+    /// If a [`Kind`] is provided that is not accounted for in this function, it panicks.
+    /// This should not happen in normal program execution since kinds cannot be created
+    /// outside of this library, so this situation is automatically a bug in this library.
+    pub fn generate_file(kind: Kind, path: &Path) -> Result<Option<Fingerprint>, Error> {
+        let mut file = BufReader::new(File::open(path)?);
+        Self::generate_stream(kind, &mut file)
+    }
+
+    /// Given a desired [`Kind`], fingerprint the content of the provided buffer
+    /// with the fingerprinter for that kind.
+    ///
+    /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
+    /// returns `Ok(None)`.
+    ///
+    /// ## Panic
+    ///
+    /// If a [`Kind`] is provided that is not accounted for in this function, it panicks.
+    /// This should not happen in normal program execution since kinds cannot be created
+    /// outside of this library, so this situation is automatically a bug in this library.
+    pub fn generate(kind: Kind, buf: impl AsRef<[u8]>) -> Result<Option<Fingerprint>, Error> {
+        let mut content = Cursor::new(buf);
+        Self::generate_stream(kind, &mut content)
+    }
+
+    /// Create a new instance from a digest.
+    pub fn from_digest<D: Digest>(kind: Kind, digest: D) -> Result<Self, Error> {
+        let content = Content::from_digest(digest)?;
+        Ok(Fingerprint::new(kind, content))
     }
 }
 
-impl Hashable for Fingerprint<RawSHA256> {
+impl UniqueHash for Fingerprint {
     /// Create a new hash from a fingerprint kind and a fingerprint
-    fn to_hash(&self) -> Vec<u8> {
-        let mut bs = RawSHA256.to_string().as_bytes().to_vec();
+    fn unique_hash(&self) -> Vec<u8> {
+        let mut bs = Kind::RAW_SHA256.as_bytes().to_vec();
         bs.extend_from_slice(self.content.as_bytes());
         Sha256::digest(&bs).to_vec()
     }
 }
 
-impl Hashable for Fingerprint<CommentStrippedSHA256> {
-    /// Create a new hash from a fingerprint kind and a fingerprint
-    fn to_hash(&self) -> Vec<u8> {
-        let mut bs = CommentStrippedSHA256.to_string().as_bytes().to_vec();
-        bs.extend_from_slice(self.content.as_bytes());
-        Sha256::digest(&bs).to_vec()
-    }
-}
-
-impl<K> Display for Fingerprint<K>
-where
-    K: Kind,
-{
+impl std::fmt::Display for Fingerprint {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", hex::encode(&self.content.0))
+        write!(f, "{}({})", self.kind, self.content)
     }
 }
 
-/// The result of eagerly running all fingerprint [`Kind`]s on some given content.
-///
-/// When creating a [`Combined`], the same content is run through each [`Kind`].
-/// Any [`Kind`] returning [`Error::Unsupported`] is silently dropped from the [`Combined`] data structure.
+impl From<&Fingerprint> for Fingerprint {
+    fn from(value: &Fingerprint) -> Self {
+        value.to_owned()
+    }
+}
+
+impl<K: Into<Kind>, C: Into<Content>> From<(K, C)> for Fingerprint {
+    fn from((k, c): (K, C)) -> Self {
+        Self::new(k, c)
+    }
+}
+
+/// A collection of fingerprints on some given content.
 ///
 /// For example, this means that if [`Combined`] is created over a binary file, [`CommentStrippedSHA256`] is not
 /// in the resulting data structure, because that kind of fingerprint requires UTF8 encoded text content to run.
-#[derive(Clone, Hash, Eq, PartialEq, Default, Debug, Getters, Serialize, Deserialize)]
-#[cfg_attr(test, derive(TypedBuilder))]
-#[getset(get = "pub")]
-pub struct Combined {
-    /// This fingerprint is derived regardless of the kind of file.
-    // Important: if this struct is changed, update `serialize::kind::kinds_evaluated` to reflect the change.
-    // `kinds_evaluated` may be replaced by a macro in the future.
-    #[serde(rename = "sha_256")]
-    raw: Fingerprint<RawSHA256>,
-    /// The fingerprint derived when the file is a text file, and any C-style comments have been removed.
-    #[serde(rename = "comment_stripped:sha_256")]
-    comment_stripped: Option<Fingerprint<CommentStrippedSHA256>>,
-}
+#[derive(Clone, Eq, PartialEq, Default, Debug, Serialize, Deserialize)]
+pub struct Combined(HashMap<Kind, Content>);
 
 impl Combined {
-    /// Create a vector of fingerprint hashes, the equivalent of running
-    /// `Fingerprint::to_hash` on each `Fingerprint` stored in this struct.
-    ///
-    /// For `Optional` fingerprints, a `None` value is dropped from the
-    /// resulting vector.
-    pub fn to_hashes(&self) -> Vec<Vec<u8>> {
-        let raw = self.raw.to_hash();
-        if let Some(stripped) = &self.comment_stripped {
-            vec![raw, stripped.to_hash()]
-        } else {
-            vec![raw]
-        }
+    /// Create a new instance from an iterator of fingerprints.
+    pub fn new<I: IntoIterator<Item = impl Into<Fingerprint>>>(iter: I) -> Self {
+        Self(
+            iter.into_iter()
+                .map(|fp| fp.into())
+                .map(|Fingerprint { kind, content }| (kind, content))
+                .collect(),
+        )
+    }
+
+    /// Create a new instance from a single fingerprint.
+    pub fn single(fp: impl Into<Fingerprint>) -> Self {
+        Self::new([fp.into()])
+    }
+
+    /// Get the corresponding fingerprint for the provided [`Kind`],
+    /// if it exists.
+    pub fn get(&self, kind: Kind) -> Option<&Content> {
+        self.0.get(&kind)
+    }
+
+    /// Iterate through the fingerprints in the collection.
+    pub fn iter(&self) -> impl Iterator<Item = (&Kind, &Content)> {
+        self.0.iter()
     }
 }
 
-impl Display for Combined {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if let Some(comment_stripped) = &self.comment_stripped {
-            write!(
-                f,
-                "{}({}); {}({})",
-                RawSHA256, self.raw, CommentStrippedSHA256, comment_stripped,
-            )
-        } else {
-            write!(f, "{}({})", RawSHA256, self.raw())
-        }
+impl IntoIterator for Combined {
+    type Item = Fingerprint;
+
+    type IntoIter = std::iter::Map<
+        std::collections::hash_map::IntoIter<Kind, Content>,
+        fn((Kind, Content)) -> Fingerprint,
+    >;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.into_iter().map(Fingerprint::from)
+    }
+}
+
+impl<I: IntoIterator<Item = Option<Fingerprint>>> From<I> for Combined {
+    fn from(value: I) -> Self {
+        Self(
+            value
+                .into_iter()
+                .filter_map(|fp| {
+                    let Fingerprint { kind, content } = fp?;
+                    Some((kind, content))
+                })
+                .collect(),
+        )
     }
 }
 
 /// Fingerprint the provided file with all fingerprint [`Kind`]s.
-pub fn fingerprint(path: &Path) -> Result<Combined, Error> {
+pub fn fingerprint_file(path: &Path) -> Result<Combined, Error> {
     let mut file = BufReader::new(File::open(path)?);
     fingerprint_stream(&mut file)
 }
 
 /// Fingerprint the provided stream (typically a file handle) with all fingerprint [`Kind`]s.
-pub fn fingerprint_stream<R: BufRead + Send + Seek + 'static>(
-    stream: &mut R,
-) -> Result<Combined, Error> {
-    let raw = fingerprint::raw(stream)?;
+pub fn fingerprint_stream<R: BufRead + Seek>(stream: &mut R) -> Result<Combined, Error> {
+    let raw = Fingerprint::generate_stream(Kind::RAW_SHA256, stream)?;
     stream.seek(io::SeekFrom::Start(0))?;
-    let comment_stripped = fingerprint::comment_stripped(stream)?;
-    Ok(Combined {
-        raw,
-        comment_stripped,
-    })
+    let cs = Fingerprint::generate_stream(Kind::COMMENT_STRIPPED_SHA256, stream)?;
+    Ok(Combined::from([raw, cs]))
 }
 
-/// The result of eagerly running all fingerprint [`Kind`]s on some given content.
+/// Fingerprint the provided buffer with all fingerprint [`Kind`]s.
 ///
-/// This structure is equivalent to [`Combined`], but each fingerprint is a tuple of the computed fingerprint
-/// plus the content that was processed to make the fingerprint.
-#[derive(Clone, Hash, Eq, PartialEq, Debug, Getters, Serialize, Deserialize)]
-#[getset(get = "pub")]
-pub struct Processed {
-    /// Whether the file was detected to be binary.
-    detected_as_binary: bool,
-
-    /// This fingerprint is derived regardless of the kind of file.
-    raw: (Fingerprint<RawSHA256>, String),
-
-    /// The fingerprint derived when the file is a text file, and any C-style comments have been removed.
-    comment_stripped: Option<(Fingerprint<CommentStrippedSHA256>, String)>,
-}
-
-/// Process the provided file with all fingerprint [`Kind`]s.
+/// ## Errors
 ///
-/// # Performance
+/// As of writing this comment, the only [`Error`] variant is [`Error::IO`],
+/// which is not possible to encounter when reading fully buffered content,
+/// so theoretically this error can be ignored or safely unwrapped.
 ///
-/// This function is intended to be used for debugging;
-/// it outputs much more data and is much more expensive in terms of IO
-/// as compared to the standard fingerprint functions.
-pub fn process(path: &Path) -> Result<Processed, Error> {
-    let mut file = BufReader::new(File::open(path)?);
-    process_stream(&mut file)
-}
-
-/// Process the provided stream (typically a file handle) with all fingerprint [`Kind`]s.
-///
-/// # Performance
-///
-/// This function is intended to be used for debugging;
-/// it outputs much more data and is much more expensive in terms of IO
-/// as compared to the standard fingerprint functions.
-pub fn process_stream<R: BufRead + Send + Seek + 'static>(
-    stream: &mut R,
-) -> Result<Processed, Error> {
-    let BinaryCheck { is_binary, .. } = fingerprint::content_is_binary(stream)?;
-    stream.seek(io::SeekFrom::Start(0))?;
-
-    let raw = fingerprint::raw(stream)?;
-    stream.seek(io::SeekFrom::Start(0))?;
-
-    let mut raw_content = Vec::new();
-    if is_binary {
-        fingerprint::content_binary(stream, &mut raw_content)?;
-    } else {
-        fingerprint::content_text(stream, &mut raw_content)?;
-    }
-    stream.seek(io::SeekFrom::Start(0))?;
-
-    let comment_stripped = fingerprint::comment_stripped(stream)?;
-    stream.seek(io::SeekFrom::Start(0))?;
-
-    Ok(Processed {
-        detected_as_binary: is_binary,
-        raw: (raw, lossy_string(raw_content)),
-        comment_stripped: if let Some(comment_stripped) = comment_stripped {
-            let mut stripped_content = Vec::new();
-            fingerprint::content_stripped(stream, &mut stripped_content)?;
-            Some((comment_stripped, lossy_string(stripped_content)))
-        } else {
-            None
-        },
-    })
-}
-
-fn lossy_string(v: Vec<u8>) -> String {
-    String::from_utf8_lossy(&v).to_string()
-}
-
-#[cfg(test)]
-mod tests;
-
-mod private {
-    pub trait Sealed {}
+/// This library returns the error anyway so that if we introduce more kinds
+/// of errors in the future it isn't a breaking change.
+pub fn fingerprint(buf: impl AsRef<[u8]>) -> Result<Combined, Error> {
+    let mut content = Cursor::new(buf);
+    fingerprint_stream(&mut content)
 }
