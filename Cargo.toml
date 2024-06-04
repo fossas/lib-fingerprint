@@ -12,4 +12,4 @@ thiserror = "1.0.31"
 sha2 = "0.10.6"
 
 [dev-dependencies]
-typed-builder = "0.10.0"
+typed-builder = "0.18.2"
