@@ -77,14 +77,26 @@ impl Kind {
 
     /// Represents a fingerprint derived by hashing the contents of a file with the SHA256 algorithm
     /// after performing basic C-style comment stripping.
+    ///
+    /// Specifically:
+    /// - All text encodings are treated as utf8.
+    /// - `git` implementations on Windows typically check out files with `\r\n` line endings,
+    ///   while *nix checks them out with `\n`.
+    ///   To be platform independent, any `\r\n` byte sequences found are converted to a single `\n`.
+    /// - C-style comments are removed:
+    ///   - `//` is considered the start of a single line comment; these bytes and any other bytes until right before a `\n` are removed.
+    ///   - `/*` is considered the start of a multi line comment; these bytes and any other bytes until after a `*/` is read are removed.
+    ///   - This function does not check for escaped comments.
+    /// - Any sequence of multiple contiguous `\n` bytes are collapsed to a single `\n` byte.
+    /// - The final `\n` byte is removed from the end of the stream if present.
     pub const COMMENT_STRIPPED_SHA256: Kind = Kind("comment_stripped:sha_256");
 
-    /// List all built in kinds.
+    /// List all kinds.
     pub fn enumerate() -> impl Iterator<Item = Self> {
         [Self::RAW_SHA256, Self::COMMENT_STRIPPED_SHA256].into_iter()
     }
 
-    /// View the kind as its underlying bytes.
+    /// View the kind label as its underlying bytes.
     pub fn as_bytes(&self) -> &[u8] {
         self.0.as_bytes()
     }
@@ -266,8 +278,8 @@ impl Fingerprint {
         stream: &mut impl BufRead,
     ) -> Result<Option<Fingerprint>, Error> {
         match kind {
-            Kind::RAW_SHA256 => fingerprint::raw(stream).map(Some),
-            Kind::COMMENT_STRIPPED_SHA256 => fingerprint::comment_stripped(stream),
+            Kind::RAW_SHA256 => fingerprint::bytes::raw(stream).map(Some),
+            Kind::COMMENT_STRIPPED_SHA256 => fingerprint::text::comment_stripped(stream),
             unknown => panic!("unsupported kind: {unknown}"),
         }
     }
