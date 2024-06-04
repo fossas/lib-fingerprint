@@ -20,7 +20,7 @@ pub fn raw<R: BufRead>(stream: &mut R) -> Result<Fingerprint, Error> {
         text::content(&mut stream, &mut hasher)?;
     }
 
-    Ok(Fingerprint::from_digest(Kind::RAW_SHA256, hasher))
+    Ok(Fingerprint::from_digest(Kind::RawSha256, hasher))
 }
 
 /// Reads the exact contents of a binary file without modification.

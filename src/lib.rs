@@ -14,6 +14,7 @@ use std::{
 use getset::Getters;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
+use strum::{AsRefStr, Display, EnumIter, IntoEnumIterator, VariantNames};
 use thiserror::Error;
 
 mod fingerprint;
@@ -49,23 +50,18 @@ pub enum Error {
 /// in other words while _Sparkle_ supports arbitrary kinds _this library_ defines (some of) those kinds.
 ///
 /// If you want to use other kinds, prefer to:
-/// - Update this library with the new kind(s) (ideal).
-/// - Implement the new kind manually in your application (acceptable if the kind is a one-off).
+/// - Update this library with the new kind(s), which is the ideal.
+/// - Implement the new kind manually in your application, which is acceptable if the kind is a one-off.
 ///
 /// ## Deserializing
 ///
 /// When deserializing this type, the deserialized value must match a known kind;
 /// otherwise a deserialization error is returned.
-#[derive(Copy, Clone, Eq, PartialEq, Hash, Debug, Serialize)]
-pub struct Kind(&'static str);
-
-impl std::fmt::Display for Kind {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
-
-impl Kind {
+#[derive(
+    Copy, Clone, Eq, PartialEq, Hash, Debug, Serialize, Display, AsRefStr, EnumIter, VariantNames,
+)]
+#[non_exhaustive]
+pub enum Kind {
     /// Represents a fingerprint derived by hashing the raw contents of a file with the SHA256 algorithm.
     ///
     /// This is the default kind of fingerprint, and the kind of fingerprint with the maximal comparison signal,
@@ -73,7 +69,8 @@ impl Kind {
     /// It's also the fingerprint kind that works for literally all kinds of files, whereas other fingerprint kinds
     /// generally require specific circumstances: `CommentStrippedSHA256` requires that the file is text, and
     /// hypothetical future fingerprint kinds such as something based on an AST would require that the file is source code.
-    pub const RAW_SHA256: Kind = Kind("sha_256");
+    #[strum(serialize = "sha_256")]
+    RawSha256,
 
     /// Represents a fingerprint derived by hashing the contents of a file with the SHA256 algorithm
     /// after performing basic C-style comment stripping.
@@ -89,16 +86,34 @@ impl Kind {
     ///   - This function does not check for escaped comments.
     /// - Any sequence of multiple contiguous `\n` bytes are collapsed to a single `\n` byte.
     /// - The final `\n` byte is removed from the end of the stream if present.
-    pub const COMMENT_STRIPPED_SHA256: Kind = Kind("comment_stripped:sha_256");
+    #[strum(serialize = "comment_stripped:sha_256")]
+    CommentStrippedSha256,
 
-    /// List all kinds.
-    pub fn enumerate() -> impl Iterator<Item = Self> {
-        [Self::RAW_SHA256, Self::COMMENT_STRIPPED_SHA256].into_iter()
-    }
+    /// Represents a fingerprint derived by hashing the raw contents of a JAR file with the SHA256 algorithm
+    /// in a platform-independent manner.
+    ///
+    /// Specifically:
+    /// - All files inside the JAR file are sorted by their names alphanumerically.
+    /// - All the contents of these files are then hashed using SHA256.
+    /// - If the contents of the files are text, `\r\n` sequences are converted to `\n`.
+    #[strum(serialize = "v1.raw.jar")]
+    JarRawV1,
 
-    /// View the kind label as its underlying bytes.
+    /// Represents a fingerprint derived by hashing the raw contents of a JAR file with the SHA256 algorithm
+    /// in a platform-independent manner.
+    ///
+    /// Specifically:
+    /// - All files inside the JAR file are sorted by their names alphanumerically.
+    /// - All the contents of these files are then hashed using SHA256.
+    /// - If the contents of the files are text, `\r\n` sequences are converted to `\n`.
+    #[strum(serialize = "v1.class.jar")]
+    JarClassV1,
+}
+
+impl Kind {
+    /// View the label as its underlying bytes.
     pub fn as_bytes(&self) -> &[u8] {
-        self.0.as_bytes()
+        self.as_ref().as_bytes()
     }
 }
 
@@ -107,16 +122,17 @@ impl<'de> Deserialize<'de> for Kind {
     where
         D: serde::Deserializer<'de>,
     {
-        let parsed = String::deserialize(deserializer)?;
-        for kind in Self::enumerate() {
-            if kind.0 == parsed {
+        let input = String::deserialize(deserializer)?;
+        for kind in Self::iter() {
+            if kind.as_ref() == input {
                 return Ok(kind);
             }
         }
 
-        let kinds = Self::enumerate().collect::<Vec<_>>();
+        // let kinds = Self::iter().collect::<Vec<_>>();
         Err(serde::de::Error::custom(format!(
-            "kind '{parsed}' is not a supported kind (supported kinds: {kinds:?})"
+            "'{input}' is not a supported kind (supported: {:?})",
+            Self::VARIANTS
         )))
     }
 }
@@ -273,20 +289,15 @@ impl Fingerprint {
     ///
     /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
     /// returns `Ok(None)`.
-    ///
-    /// ## Panic
-    ///
-    /// If a [`Kind`] is provided that is not accounted for in this function, it panicks.
-    /// This should not happen in normal program execution since kinds cannot be created
-    /// outside of this library, so this situation is automatically a bug in this library.
     pub fn generate_stream(
         kind: Kind,
         stream: &mut impl BufRead,
     ) -> Result<Option<Fingerprint>, Error> {
         match kind {
-            Kind::RAW_SHA256 => fingerprint::bytes::raw(stream).map(Some),
-            Kind::COMMENT_STRIPPED_SHA256 => fingerprint::text::comment_stripped(stream),
-            unknown => panic!("unsupported kind: {unknown}"),
+            Kind::RawSha256 => fingerprint::bytes::raw(stream).map(Some),
+            Kind::CommentStrippedSha256 => fingerprint::text::comment_stripped(stream),
+            Kind::JarRawV1 => fingerprint::archive::jar_raw(stream),
+            Kind::JarClassV1 => fingerprint::archive::jar_class(stream),
         }
     }
 
@@ -295,12 +306,6 @@ impl Fingerprint {
     ///
     /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
     /// returns `Ok(None)`.
-    ///
-    /// ## Panic
-    ///
-    /// If a [`Kind`] is provided that is not accounted for in this function, it panicks.
-    /// This should not happen in normal program execution since kinds cannot be created
-    /// outside of this library, so this situation is automatically a bug in this library.
     pub fn generate_file(kind: Kind, path: &Path) -> Result<Option<Fingerprint>, Error> {
         let mut file = BufReader::new(File::open(path)?);
         Self::generate_stream(kind, &mut file)
@@ -311,12 +316,6 @@ impl Fingerprint {
     ///
     /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
     /// returns `Ok(None)`.
-    ///
-    /// ## Panic
-    ///
-    /// If a [`Kind`] is provided that is not accounted for in this function, it panicks.
-    /// This should not happen in normal program execution since kinds cannot be created
-    /// outside of this library, so this situation is automatically a bug in this library.
     pub fn generate(kind: Kind, buf: impl AsRef<[u8]>) -> Result<Option<Fingerprint>, Error> {
         let mut content = Cursor::new(buf);
         Self::generate_stream(kind, &mut content)
@@ -332,7 +331,7 @@ impl Fingerprint {
 impl UniqueHash for Fingerprint {
     /// Create a new hash from a fingerprint kind and a fingerprint
     fn unique_hash(&self) -> Vec<u8> {
-        let mut bs = Kind::RAW_SHA256.as_bytes().to_vec();
+        let mut bs = Kind::RawSha256.as_bytes().to_vec();
         bs.extend_from_slice(self.content.as_bytes());
         Sha256::digest(&bs).to_vec()
     }
@@ -426,9 +425,9 @@ pub fn fingerprint_file(path: &Path) -> Result<Combined, Error> {
 
 /// Fingerprint the provided stream (typically a file handle) with all fingerprint [`Kind`]s.
 pub fn fingerprint_stream<R: BufRead + Seek>(stream: &mut R) -> Result<Combined, Error> {
-    let raw = Fingerprint::generate_stream(Kind::RAW_SHA256, stream)?;
+    let raw = Fingerprint::generate_stream(Kind::RawSha256, stream)?;
     stream.seek(io::SeekFrom::Start(0))?;
-    let cs = Fingerprint::generate_stream(Kind::COMMENT_STRIPPED_SHA256, stream)?;
+    let cs = Fingerprint::generate_stream(Kind::CommentStrippedSha256, stream)?;
     Ok(Combined::from([raw, cs]))
 }
 
