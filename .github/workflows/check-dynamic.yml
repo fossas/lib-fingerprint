@@ -27,6 +27,6 @@ jobs:
         key: ${{ matrix.settings.host }}
     - run: ${{ matrix.settings.setup }}
     - run: ${{ matrix.settings.build }}
-    - run: cargo check --release --all --bins --examples --tests
+    - run: cargo check --all --bins --examples --tests
     - run: cargo nextest run --all-targets
     - run: cargo test --doc

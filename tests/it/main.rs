@@ -96,12 +96,12 @@ fn fingerprints_text_file() {
 #[test]
 fn fingerprints_text_file_stripping_cr() {
     let content = b"hello world\r\nanother line\r\na final line\n";
-    let cr_stripped = b"hello world\nanother line\na final line\n";
-    let cm_stripped = b"hello world\nanother line\na final line";
+    let content_cs = b"hello world\nanother line\na final line";
+    let without_cr = b"hello world\nanother line\na final line\n";
 
     let combined = fingerprint_stream(&mut Cursor::new(content)).expect("fingerprint");
-    assert_fingerprint_eq!(Kind::RAW_SHA256, cr_stripped, combined);
-    assert_fingerprint_eq!(Kind::COMMENT_STRIPPED_SHA256, cm_stripped, combined);
+    assert_fingerprint_eq!(Kind::RAW_SHA256, without_cr, combined);
+    assert_fingerprint_eq!(Kind::COMMENT_STRIPPED_SHA256, content_cs, combined);
 }
 
 #[test]
