@@ -31,11 +31,10 @@ pub fn comment_stripped<R: BufRead>(stream: &mut R) -> Result<Option<Fingerprint
     let mut stream = Cursor::new(read).chain(stream);
     let mut hasher = Sha256::new();
     match content_stripped(&mut stream, &mut hasher) {
-        Ok(_) => Some(Fingerprint::from_digest(
+        Ok(_) => Ok(Some(Fingerprint::from_digest(
             Kind::COMMENT_STRIPPED_SHA256,
             hasher,
-        ))
-        .transpose(),
+        ))),
         Err(err) => {
             // The `io::Error` type is opaque.
             // Handle the case of attempting to comment strip a binary file.

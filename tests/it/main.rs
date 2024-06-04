@@ -3,7 +3,6 @@
 use std::io::Cursor;
 
 use pretty_assertions::assert_eq;
-use sha2::{Digest, Sha256};
 
 use fingerprint::*;
 
@@ -34,25 +33,18 @@ macro_rules! assert_fingerprint_eq {
     }};
 }
 
-fn hash(content: &[u8]) -> Content {
-    let mut hasher = Sha256::new();
-    hasher.update(content);
-
-    let hash = hasher.finalize().as_slice().to_vec();
-    Content::new(hash)
-}
-
 /// Create a fingerprint, asserted to the provided kind.
 ///
 /// This is for testing; the hash used may not actually match the hash
 /// for the same content with the named kind.
 fn make_fingerprint(kind: Kind, content: &[u8]) -> Fingerprint {
-    Fingerprint::new(kind, hash(content))
+    let content = Content::hash_sha256(content);
+    Fingerprint::new(kind, content)
 }
 
 #[test]
 fn fp_getters() {
-    let content = hash(b"hello world");
+    let content = Content::hash_sha256(b"hello world");
     let fp = Fingerprint::new(Kind::RAW_SHA256, content.clone());
     assert_eq!(&content, fp.content())
 }

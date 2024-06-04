@@ -132,9 +132,15 @@ impl Content {
     }
 
     /// Create a new instance from a hash digest.
-    pub fn from_digest<D: Digest>(digest: D) -> Result<Self, Error> {
-        let buf = digest.finalize().as_slice().to_vec();
-        Ok(Self(buf))
+    pub fn from_digest<D: Digest>(digest: D) -> Self {
+        Self(digest.finalize().as_slice().to_vec())
+    }
+
+    /// Create a new instance by hashing the provided bytes using SHA256.
+    pub fn hash_sha256(content: impl AsRef<[u8]>) -> Self {
+        let mut hasher = Sha256::new();
+        hasher.update(content);
+        Self::from_digest(hasher)
     }
 
     /// Reference the bytes inside the blob.
@@ -317,9 +323,9 @@ impl Fingerprint {
     }
 
     /// Create a new instance from a digest.
-    pub fn from_digest<D: Digest>(kind: Kind, digest: D) -> Result<Self, Error> {
-        let content = Content::from_digest(digest)?;
-        Ok(Fingerprint::new(kind, content))
+    pub fn from_digest<D: Digest>(kind: Kind, digest: D) -> Self {
+        let content = Content::from_digest(digest);
+        Fingerprint::new(kind, content)
     }
 }
 
