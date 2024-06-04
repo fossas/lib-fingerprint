@@ -7,7 +7,7 @@
 use std::{
     collections::HashMap,
     fs::File,
-    io::{self, BufRead, BufReader, Cursor, Seek},
+    io::{BufRead, BufReader, Cursor, Seek},
     path::Path,
 };
 
@@ -27,7 +27,19 @@ pub enum Error {
     /// A generic IO error occurred while reading the content to be hashed.
     /// This error may be retried, but if it fails multiple times it's generally not recoverable.
     #[error("i/o error: {0}")]
-    IO(#[from] io::Error),
+    IO(#[from] std::io::Error),
+
+    /// An error while extracting the named file from an archive.
+    /// This error may be retried, but if it fails multiple times it's generally not recoverable.
+    #[error("i/o error while fingerprinting '{file}': {err}")]
+    Archive {
+        /// The path of the file inside the archive.
+        file: String,
+
+        /// The error when fingerprinting the file.
+        #[source]
+        err: std::io::Error,
+    },
 }
 
 /// Fingerprint kinds MUST maintain exact implementation compatibility; once the algorithm for a given kind
@@ -296,8 +308,8 @@ impl Fingerprint {
         match kind {
             Kind::RawSha256 => fingerprint::bytes::raw(stream).map(Some),
             Kind::CommentStrippedSha256 => fingerprint::text::comment_stripped(stream),
-            Kind::JarRawV1 => fingerprint::archive::jar_raw(stream),
-            Kind::JarClassV1 => fingerprint::archive::jar_class(stream),
+            Kind::JarRawV1 => fingerprint::jar::raw(stream),
+            Kind::JarClassV1 => fingerprint::jar::class(stream),
         }
     }
 
@@ -364,7 +376,7 @@ pub struct Combined(HashMap<Kind, Content>);
 
 impl Combined {
     /// Create a new instance from an iterator of fingerprints.
-    pub fn new<I: IntoIterator<Item = impl Into<Fingerprint>>>(iter: I) -> Self {
+    pub fn collect<I: IntoIterator<Item = impl Into<Fingerprint>>>(iter: I) -> Self {
         Self(
             iter.into_iter()
                 .map(|fp| fp.into())
@@ -375,7 +387,7 @@ impl Combined {
 
     /// Create a new instance from a single fingerprint.
     pub fn single(fp: impl Into<Fingerprint>) -> Self {
-        Self::new([fp.into()])
+        Self::collect([fp.into()])
     }
 
     /// Get the corresponding fingerprint for the provided [`Kind`],
@@ -403,20 +415,6 @@ impl IntoIterator for Combined {
     }
 }
 
-impl<I: IntoIterator<Item = Option<Fingerprint>>> From<I> for Combined {
-    fn from(value: I) -> Self {
-        Self(
-            value
-                .into_iter()
-                .filter_map(|fp| {
-                    let Fingerprint { kind, content } = fp?;
-                    Some((kind, content))
-                })
-                .collect(),
-        )
-    }
-}
-
 /// Fingerprint the provided file with all fingerprint [`Kind`]s.
 pub fn fingerprint_file(path: &Path) -> Result<Combined, Error> {
     let mut file = BufReader::new(File::open(path)?);
@@ -425,10 +423,17 @@ pub fn fingerprint_file(path: &Path) -> Result<Combined, Error> {
 
 /// Fingerprint the provided stream (typically a file handle) with all fingerprint [`Kind`]s.
 pub fn fingerprint_stream<R: BufRead + Seek>(stream: &mut R) -> Result<Combined, Error> {
-    let raw = Fingerprint::generate_stream(Kind::RawSha256, stream)?;
-    stream.seek(io::SeekFrom::Start(0))?;
-    let cs = Fingerprint::generate_stream(Kind::CommentStrippedSha256, stream)?;
-    Ok(Combined::from([raw, cs]))
+    let mut fingerprints = Vec::new();
+    for (i, kind) in Kind::iter().enumerate() {
+        if i > 0 {
+            stream.seek(std::io::SeekFrom::Start(0))?;
+        }
+
+        if let Some(fp) = Fingerprint::generate_stream(kind, stream)? {
+            fingerprints.push(fp);
+        }
+    }
+    Ok(Combined::collect(fingerprints))
 }
 
 /// Fingerprint the provided buffer with all fingerprint [`Kind`]s.
