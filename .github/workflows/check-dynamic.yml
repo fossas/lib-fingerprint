@@ -28,5 +28,5 @@ jobs:
     - run: ${{ matrix.settings.setup }}
     - run: ${{ matrix.settings.build }}
     - run: cargo check --all --bins --examples --tests
-    - run: cargo nextest run --all-targets
+    - run: cargo nextest run --all-targets --release
     - run: cargo test --doc

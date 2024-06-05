@@ -1,3 +1,10 @@
+//! Tests for JAR fingerprinting.
+//!
+//! Highly recommended to run these tests with `--release`:
+//! ```ignore
+//! cargo nextest run --release
+//! ```
+
 use std::{
     collections::{HashMap, HashSet},
     fs::File,
