@@ -68,8 +68,10 @@ fn jars_in_container(container: &str) -> Vec<DiscoveredJar> {
     // but since this is only for testing I think it's easier to interact via the shell.
     let sh = xshell::Shell::new().expect("create shell");
 
+    // Force the `linux/amd64` platform when pulling, since that's what CI runs in.
+    // This way local tests work even on M-series macOS, and CI works even though it's linux.
     debug!("pulling container");
-    xshell::cmd!(sh, "docker pull {container}")
+    xshell::cmd!(sh, "docker pull --platform linux/amd64 {container}")
         .quiet()
         .run()
         .expect("pull container");

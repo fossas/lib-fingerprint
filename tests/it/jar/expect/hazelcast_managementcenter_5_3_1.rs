@@ -23,11 +23,11 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "usr/lib/jvm/java-17-openjdk-17.0.7.0.7-3.el8.aarch64/lib/jrt-fs.jar",
+            "usr/lib/jvm/java-17-openjdk-17.0.7.0.7-3.el8.x86_64/lib/jrt-fs.jar",
             combined! {
                 Kind::JarClassV1 => "1b9d4816dad40a7922d991be24f0f1bc4bffaf271ab45b9ba32f123a932dd807",
                 Kind::JarRawV1 => "3788fc905d4f2aaf615252c8fcbfc1ec8fdc25b4538f194603b79d9d571ab7d4",
-                Kind::RawSha256 => "2da0df083e22006770f4c2c19a6212ec266ea29a7901fd1bef5dc2c01eec7394",
+                Kind::RawSha256 => "f05c638cc96a6e119aef7044764c189a089ed9abfbd765efe33774bc94afa0d5",
             },
         ),
     ]
