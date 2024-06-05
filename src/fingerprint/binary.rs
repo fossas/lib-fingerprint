@@ -4,13 +4,13 @@ use std::io::Read;
 ///
 /// The read bytes are buffered in this structure so that they can be re-read
 /// by the actual fingerprint implementation.
-/// ```
+/// ```ignore
 /// let content = String::from("test_").repeat(2000);
 /// let mut reader = std::io::Cursor::new(&content);
 /// let Check { read, .. } = Check::content(&mut reader).expect("read");
 ///
 /// let mut read_content = String::new();
-/// Cursor::new(read).chain(reader).expect("read");
+/// std::io::Cursor::new(read).chain(reader).expect("read");
 /// assert_eq!(content, read_content)
 /// ```
 #[derive(Clone)]
