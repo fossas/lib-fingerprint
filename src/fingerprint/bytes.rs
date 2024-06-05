@@ -7,9 +7,10 @@ use crate::{Error, Fingerprint, Kind};
 use super::{binary, text};
 
 /// Fingerprint the file as a raw chunk of bytes.
-pub fn raw<R: BufRead>(stream: &mut R) -> Result<Fingerprint, Error> {
+#[tracing::instrument(level = tracing::Level::DEBUG, skip(stream), ret)]
+pub fn raw<R: BufRead>(mut stream: R) -> Result<Fingerprint, Error> {
     // Read the start of the stream, and decide whether to treat the rest of the stream as binary based on that.
-    let binary::Check { is_binary, read } = binary::Check::content(stream)?;
+    let binary::Check { is_binary, read } = binary::Check::content(&mut stream)?;
 
     // Chain the part of the stream already read to evaluate binary along with the rest of the stream.
     let mut stream = Cursor::new(read).chain(stream);
@@ -24,6 +25,7 @@ pub fn raw<R: BufRead>(stream: &mut R) -> Result<Fingerprint, Error> {
 }
 
 /// Reads the exact contents of a binary file without modification.
+#[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
 pub fn content(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
     std::io::copy(stream, w)?;
     Ok(())

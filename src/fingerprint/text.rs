@@ -2,6 +2,7 @@ use std::io::{BufRead, BufReader, Cursor, Read as _, Write};
 
 use iter_read::IterRead;
 use sha2::{Digest, Sha256};
+use tap::Pipe as _;
 
 use crate::{stream::ConvertCRLFToLF as _, Error, Fingerprint, Kind};
 
@@ -20,9 +21,10 @@ use super::binary;
 ///   - This function does not check for escaped comments.
 /// - Any sequence of multiple contiguous `\n` bytes are collapsed to a single `\n` byte.
 /// - The final `\n` byte is removed from the end of the stream if present.
-pub fn comment_stripped<R: BufRead>(stream: &mut R) -> Result<Option<Fingerprint>, Error> {
+#[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
+pub fn comment_stripped(mut stream: impl BufRead) -> Result<Option<Fingerprint>, Error> {
     // Read the start of the stream, and decide whether to treat the rest of the stream as binary based on that.
-    let binary::Check { is_binary, read } = binary::Check::content(stream)?;
+    let binary::Check { is_binary, read } = binary::Check::content(&mut stream)?;
     if is_binary {
         return Ok(None);
     }
@@ -54,13 +56,19 @@ pub fn comment_stripped<R: BufRead>(stream: &mut R) -> Result<Option<Fingerprint
 /// - `git` implementations on Windows typically check out files with `\r\n` line endings,
 ///   while *nix checks them out with `\n`.
 ///   To be platform independent, any `\r\n` byte sequences found are converted to a single `\n`.
-pub fn content(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
-    let stream = BufReader::new(stream).bytes().crlf_to_lf().fuse();
-    std::io::copy(&mut IterRead::new(stream), w)?;
+#[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
+pub fn content(stream: impl BufRead, mut w: impl Write) -> Result<(), Error> {
+    let mut stream = BufReader::new(stream)
+        .bytes()
+        .crlf_to_lf()
+        .fuse()
+        .pipe(IterRead::new);
+    std::io::copy(&mut stream, &mut w)?;
     Ok(())
 }
 
 /// Hashes code files while removing C-style comments and blank lines in a platform independent manner.
+#[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
 fn content_stripped(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(), Error> {
     let mut buffered_output_line = String::new();
     let mut is_multiline_active = false;
@@ -88,6 +96,7 @@ fn content_stripped(stream: &mut impl BufRead, w: &mut impl Write) -> Result<(),
 ///
 /// This is very much not an ideal function: it scans the line multiple times instead of being forward-looking-only,
 /// and the dual responsibility makes it complicated. We should fix this, but moving forward for now.
+#[tracing::instrument(level = tracing::Level::DEBUG, skip_all)]
 fn clean_line(line: String, is_multiline_active: bool) -> (String, bool) {
     if is_multiline_active {
         if let Some(end) = line.find("*/") {

@@ -13,7 +13,7 @@ use std::io::Read;
 /// Cursor::new(read).chain(reader).expect("read");
 /// assert_eq!(content, read_content)
 /// ```
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub struct Check {
     pub read: Vec<u8>,
     pub is_binary: bool,
@@ -23,7 +23,8 @@ impl Check {
     /// Inspect the file to determine if it is binary.
     ///
     /// Uses the same method as git: "is there a zero byte in the first 8000 bytes of the file"
-    pub fn content<R: Read>(stream: &mut R) -> Result<Check, std::io::Error> {
+    #[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
+    pub fn content(stream: impl Read) -> Result<Check, std::io::Error> {
         let mut buf = Vec::with_capacity(8000);
         stream.take(buf.capacity() as u64).read_to_end(&mut buf)?;
         let is_binary = buf.contains(&0);
@@ -31,6 +32,15 @@ impl Check {
             read: buf,
             is_binary,
         })
+    }
+}
+
+impl std::fmt::Debug for Check {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Check")
+            .field("read", &self.read.len())
+            .field("is_binary", &self.is_binary)
+            .finish()
     }
 }
 

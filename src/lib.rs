@@ -301,9 +301,10 @@ impl Fingerprint {
     ///
     /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
     /// returns `Ok(None)`.
-    pub fn generate_stream(
+    #[tracing::instrument(level = tracing::Level::DEBUG, skip(stream), ret)]
+    pub fn from_stream(
         kind: Kind,
-        stream: &mut impl BufRead,
+        stream: impl BufRead + Seek,
     ) -> Result<Option<Fingerprint>, Error> {
         match kind {
             Kind::RawSha256 => fingerprint::bytes::raw(stream).map(Some),
@@ -318,9 +319,10 @@ impl Fingerprint {
     ///
     /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
     /// returns `Ok(None)`.
-    pub fn generate_file(kind: Kind, path: &Path) -> Result<Option<Fingerprint>, Error> {
+    #[tracing::instrument(level = tracing::Level::DEBUG, ret)]
+    pub fn from_file(kind: Kind, path: &Path) -> Result<Option<Fingerprint>, Error> {
         let mut file = BufReader::new(File::open(path)?);
-        Self::generate_stream(kind, &mut file)
+        Self::from_stream(kind, &mut file)
     }
 
     /// Given a desired [`Kind`], fingerprint the content of the provided buffer
@@ -328,9 +330,10 @@ impl Fingerprint {
     ///
     /// If the fingerprinter for this [`Kind`] doesn't support the provided content,
     /// returns `Ok(None)`.
-    pub fn generate(kind: Kind, buf: impl AsRef<[u8]>) -> Result<Option<Fingerprint>, Error> {
+    #[tracing::instrument(level = tracing::Level::DEBUG, fields(buf = %buf.as_ref().len()), ret)]
+    pub fn from_buffer(kind: Kind, buf: impl AsRef<[u8]>) -> Result<Option<Fingerprint>, Error> {
         let mut content = Cursor::new(buf);
-        Self::generate_stream(kind, &mut content)
+        Self::from_stream(kind, &mut content)
     }
 
     /// Create a new instance from a digest.
@@ -375,19 +378,48 @@ impl<K: Into<Kind>, C: Into<Content>> From<(K, C)> for Fingerprint {
 pub struct Combined(HashMap<Kind, Content>);
 
 impl Combined {
-    /// Create a new instance from an iterator of fingerprints.
-    pub fn collect<I: IntoIterator<Item = impl Into<Fingerprint>>>(iter: I) -> Self {
-        Self(
-            iter.into_iter()
-                .map(|fp| fp.into())
-                .map(|Fingerprint { kind, content }| (kind, content))
-                .collect(),
-        )
+    /// Fingerprint the provided stream (typically a file handle) with all fingerprint [`Kind`]s.
+    #[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
+    pub fn from_stream(mut stream: impl BufRead + Seek) -> Result<Self, Error> {
+        let mut fingerprints = Vec::new();
+        for (i, kind) in Kind::iter().enumerate() {
+            if i > 0 {
+                stream.seek(std::io::SeekFrom::Start(0))?;
+            }
+
+            if let Some(fp) = Fingerprint::from_stream(kind, &mut stream)? {
+                fingerprints.push(fp);
+            }
+        }
+        Ok(Combined::from(fingerprints))
+    }
+
+    /// Fingerprint the provided file with all fingerprint [`Kind`]s.
+    #[tracing::instrument(level = tracing::Level::DEBUG, ret)]
+    pub fn from_file(path: &Path) -> Result<Self, Error> {
+        let mut file = BufReader::new(File::open(path)?);
+        Self::from_stream(&mut file)
+    }
+
+    /// Fingerprint the provided buffer with all fingerprint [`Kind`]s.
+    ///
+    /// ## Errors
+    ///
+    /// As of writing this comment, the only [`Error`] variants are IO-related,
+    /// which are not possible to encounter when reading fully buffered content,
+    /// so theoretically this error can be ignored or safely unwrapped.
+    ///
+    /// This library returns the error anyway so that if it introduces more kinds
+    /// of errors in the future it isn't a breaking change.
+    #[tracing::instrument(level = tracing::Level::DEBUG, fields(buf = %buf.as_ref().len()), ret)]
+    pub fn from_buffer(buf: impl AsRef<[u8]>) -> Result<Self, Error> {
+        let mut content = Cursor::new(buf);
+        Self::from_stream(&mut content)
     }
 
     /// Create a new instance from a single fingerprint.
     pub fn single(fp: impl Into<Fingerprint>) -> Self {
-        Self::collect([fp.into()])
+        Self::from([fp])
     }
 
     /// Get the corresponding fingerprint for the provided [`Kind`],
@@ -400,53 +432,21 @@ impl Combined {
     pub fn iter(&self) -> impl Iterator<Item = (&Kind, &Content)> {
         self.0.iter()
     }
-}
 
-impl IntoIterator for Combined {
-    type Item = Fingerprint;
-
-    type IntoIter = std::iter::Map<
-        std::collections::hash_map::IntoIter<Kind, Content>,
-        fn((Kind, Content)) -> Fingerprint,
-    >;
-
-    fn into_iter(self) -> Self::IntoIter {
-        self.0.into_iter().map(Fingerprint::from)
+    /// Convert into a hashmap of constituent parts.
+    pub fn into_inner(self) -> HashMap<Kind, Content> {
+        self.0
     }
 }
 
-/// Fingerprint the provided file with all fingerprint [`Kind`]s.
-pub fn fingerprint_file(path: &Path) -> Result<Combined, Error> {
-    let mut file = BufReader::new(File::open(path)?);
-    fingerprint_stream(&mut file)
-}
-
-/// Fingerprint the provided stream (typically a file handle) with all fingerprint [`Kind`]s.
-pub fn fingerprint_stream<R: BufRead + Seek>(stream: &mut R) -> Result<Combined, Error> {
-    let mut fingerprints = Vec::new();
-    for (i, kind) in Kind::iter().enumerate() {
-        if i > 0 {
-            stream.seek(std::io::SeekFrom::Start(0))?;
-        }
-
-        if let Some(fp) = Fingerprint::generate_stream(kind, stream)? {
-            fingerprints.push(fp);
-        }
+impl<I: IntoIterator<Item = F>, F: Into<Fingerprint>> From<I> for Combined {
+    fn from(value: I) -> Self {
+        Self(
+            value
+                .into_iter()
+                .map(|fp| fp.into())
+                .map(|Fingerprint { kind, content }| (kind, content))
+                .collect(),
+        )
     }
-    Ok(Combined::collect(fingerprints))
-}
-
-/// Fingerprint the provided buffer with all fingerprint [`Kind`]s.
-///
-/// ## Errors
-///
-/// As of writing this comment, the only [`Error`] variant is [`Error::IO`],
-/// which is not possible to encounter when reading fully buffered content,
-/// so theoretically this error can be ignored or safely unwrapped.
-///
-/// This library returns the error anyway so that if we introduce more kinds
-/// of errors in the future it isn't a breaking change.
-pub fn fingerprint(buf: impl AsRef<[u8]>) -> Result<Combined, Error> {
-    let mut content = Cursor::new(buf);
-    fingerprint_stream(&mut content)
 }

@@ -11,7 +11,7 @@ use fingerprint::*;
 ///
 /// ```ignore
 /// let content = b"hello world";
-/// let combined = fingerprint_stream(&mut Cursor::new(content)).expect("fingerprint");
+/// let combined = Combined::from_stream(&mut Cursor::new(content)).expect("fingerprint");
 /// assert_fingerprint_eq!(Kind::RawSha256, content, combined);
 /// assert_fingerprint_eq!(Kind::CommentStrippedSha256, content, combined);
 /// ```
@@ -19,7 +19,7 @@ use fingerprint::*;
 /// You can also assert a [`None`] value:
 /// ```ignore
 /// let content = vec![1, 2, 3, 0, 1, 2, 3];
-/// let combined = fingerprint_stream(&mut Cursor::new(content.clone())).expect("fingerprint");
+/// let combined = Combined::from_stream(&mut Cursor::new(content.clone())).expect("fingerprint");
 /// assert_fingerprint_eq!(Kind::RawSha256, &content, combined);
 /// assert_fingerprint_eq!(Kind::CommentStrippedSha256, None, combined);
 /// ```
@@ -54,7 +54,7 @@ fn combined_getters() {
     let raw = make_fingerprint(Kind::RawSha256, b"hello world raw");
     let cs = make_fingerprint(Kind::CommentStrippedSha256, b"hello world comment stripped");
 
-    let combined = Combined::collect([&raw, &cs]);
+    let combined = Combined::from([&raw, &cs]);
     assert_eq!(Some(raw.content()), combined.get(Kind::RawSha256));
     assert_eq!(
         Some(cs.content()),
@@ -69,7 +69,7 @@ fn combined_getters() {
 #[test]
 fn fingerprints_binary_file() {
     let content = vec![1, 2, 3, 0, 1, 2, 3];
-    let combined = fingerprint_stream(&mut Cursor::new(content.clone())).expect("fingerprint");
+    let combined = Combined::from_stream(&mut Cursor::new(content.clone())).expect("fingerprint");
     assert_fingerprint_eq!(Kind::RawSha256, &content, combined);
     assert_fingerprint_eq!(Kind::CommentStrippedSha256, None, combined);
 }
@@ -77,7 +77,7 @@ fn fingerprints_binary_file() {
 #[test]
 fn fingerprints_text_file() {
     let content = b"hello world";
-    let combined = fingerprint_stream(&mut Cursor::new(content)).expect("fingerprint");
+    let combined = Combined::from_stream(&mut Cursor::new(content)).expect("fingerprint");
     assert_fingerprint_eq!(Kind::RawSha256, content, combined);
     assert_fingerprint_eq!(Kind::CommentStrippedSha256, content, combined);
 }
@@ -88,7 +88,7 @@ fn fingerprints_text_file_stripping_cr() {
     let content_cs = b"hello world\nanother line\na final line";
     let without_cr = b"hello world\nanother line\na final line\n";
 
-    let combined = fingerprint_stream(&mut Cursor::new(content)).expect("fingerprint");
+    let combined = Combined::from_stream(&mut Cursor::new(content)).expect("fingerprint");
     assert_fingerprint_eq!(Kind::RawSha256, without_cr, combined);
     assert_fingerprint_eq!(Kind::CommentStrippedSha256, content_cs, combined);
 }
@@ -97,7 +97,7 @@ fn fingerprints_text_file_stripping_cr() {
 fn fingerprints_binary_file_appearing_as_text() {
     // Sourced from `git@github.com:chromium/chromium.git` at `tools/origin_trials/eftest.key` on commit 49249345609d505c8bb8b0b5a42ff4b68b9e6d41.
     let content = include_bytes!("../../testdata/eftest.key");
-    let combined = fingerprint_stream(&mut Cursor::new(content)).expect("fingerprint");
+    let combined = Combined::from_stream(&mut Cursor::new(content)).expect("fingerprint");
     assert_fingerprint_eq!(Kind::RawSha256, content, combined);
     assert_fingerprint_eq!(Kind::CommentStrippedSha256, None, combined);
 }
@@ -105,7 +105,7 @@ fn fingerprints_binary_file_appearing_as_text() {
 #[test]
 fn comment_stripped_does_not_fingerprint_binary_file() {
     let content = vec![1, 2, 3, 0, 1, 2, 3];
-    let combined = fingerprint_stream(&mut Cursor::new(content)).expect("fingerprint");
+    let combined = Combined::from_stream(&mut Cursor::new(content)).expect("fingerprint");
     assert_fingerprint_eq!(Kind::CommentStrippedSha256, None, combined);
 }
 
@@ -123,7 +123,7 @@ int main() {
 }
 "#;
 
-    let combined = fingerprint_stream(&mut Cursor::new(content)).expect("fingerprint");
+    let combined = Combined::from_stream(&mut Cursor::new(content)).expect("fingerprint");
     let expected = Content::new(
         hex::decode("44fc8f68ab633c7ca0240a66e4ff038c0f2412fe69d14b6f052556edaa1b9160")
             .expect("decode hex literal"),
