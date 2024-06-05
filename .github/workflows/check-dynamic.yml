@@ -9,12 +9,27 @@ jobs:
         - host: windows-latest
           setup: echo "no setup"
           build: cargo build
+          test: cargo nextest run --release
         - host: ubuntu-latest
-          setup: echo "no setup"
-          build: cargo build
+          setup: |
+            rustup target add aarch64-unknown-linux-gnu &&
+            rustup target add x86_64-unknown-linux-gnu
+          build: |
+            cargo build --target aarch64-unknown-linux-gnu &&
+            cargo build --target x86_64-unknown-linux-gnu
+          test: |
+            cargo nextest run --target aarch64-unknown-linux-gnu --release &&
+            cargo nextest run --target x86_64-unknown-linux-gnu --release
         - host: macos-latest
-          setup: rustup target add aarch64-apple-darwin && rustup target add x86_64-apple-darwin
-          build: cargo build --target aarch64-apple-darwin && cargo build --target x86_64-apple-darwin
+          setup: |
+            rustup target add aarch64-apple-darwin &&
+            rustup target add x86_64-apple-darwin
+          build: |
+            cargo build --target aarch64-apple-darwin &&
+            cargo build --target x86_64-apple-darwin
+          test: |
+            cargo nextest run --target aarch64-apple-darwin --release &&
+            cargo nextest run --target x86_64-apple-darwin --release
 
     runs-on: ${{ matrix.settings.host }}
     name: test / ${{ matrix.settings.host }}
@@ -27,6 +42,6 @@ jobs:
         key: ${{ matrix.settings.host }}
     - run: ${{ matrix.settings.setup }}
     - run: ${{ matrix.settings.build }}
+    - run: ${{ matrix.settings.test }}
     - run: cargo check --all --bins --examples --tests
-    - run: cargo nextest run --all-targets --release
     - run: cargo test --doc
