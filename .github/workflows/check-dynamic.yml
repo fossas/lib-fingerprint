@@ -8,15 +8,15 @@ jobs:
         settings:
         - host: windows-latest
           setup: echo "no setup"
-          build: cargo build
+          build: cargo build --release
           test: cargo nextest run --release
         - host: ubuntu-latest
           setup: |
             rustup target add aarch64-unknown-linux-gnu &&
             rustup target add x86_64-unknown-linux-gnu
           build: |
-            cargo build --target aarch64-unknown-linux-gnu &&
-            cargo build --target x86_64-unknown-linux-gnu
+            cargo build --release --target aarch64-unknown-linux-gnu &&
+            cargo build --release --target x86_64-unknown-linux-gnu
           test: |
             cargo nextest run --target aarch64-unknown-linux-gnu --release &&
             cargo nextest run --target x86_64-unknown-linux-gnu --release
@@ -25,8 +25,8 @@ jobs:
             rustup target add aarch64-apple-darwin &&
             rustup target add x86_64-apple-darwin
           build: |
-            cargo build --target aarch64-apple-darwin &&
-            cargo build --target x86_64-apple-darwin
+            cargo build --release --target aarch64-apple-darwin &&
+            cargo build --release --target x86_64-apple-darwin
           test: |
             cargo nextest run --target aarch64-apple-darwin --release &&
             cargo nextest run --target x86_64-apple-darwin --release
