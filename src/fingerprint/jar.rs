@@ -39,6 +39,8 @@ pub fn class(stream: impl BufRead + Seek) -> Result<Option<Fingerprint>, Error> 
 
 #[tracing::instrument(level = tracing::Level::DEBUG, fields(entry = ?entry.name()), ret)]
 fn is_class_file(entry: &ZipFile<'_>) -> bool {
+    // If this becomes a problem in the future we can use the magic number instead:
+    // https://en.wikipedia.org/wiki/Java_class_file#Magic_Number
     entry.name().ends_with(".class")
 }
 
