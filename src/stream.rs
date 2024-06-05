@@ -7,11 +7,11 @@ const CR_CHAR: u8 = b'\r';
 
 /// Convenience trait representing an iterator of a byte stream (as returned from `Read::bytes`).
 /// Automatically implemented.
-pub(crate) trait ByteIterator: Iterator<Item = io::Result<u8>> {}
+pub trait ByteIterator: Iterator<Item = io::Result<u8>> {}
 impl<I> ByteIterator for I where I: Iterator<Item = io::Result<u8>> {}
 
 /// Implements the ability to drop `\r\n` byte pairs from a stream, converting each instance to a single `\n`.
-pub(crate) struct CRLFToLF<I: ByteIterator> {
+pub struct CRLFToLF<I: ByteIterator> {
     iter: Peekable<I>,
 }
 
@@ -48,7 +48,7 @@ where
     }
 }
 
-pub(crate) trait ConvertCRLFToLF {
+pub trait ConvertCRLFToLF {
     /// Drops `\r\n` byte pairs from a stream, converting each instance to a single `\n`.
     fn crlf_to_lf(self) -> CRLFToLF<Self>
     where
