@@ -34,38 +34,60 @@ macro_rules! assert_eq_jars {
 }
 
 #[test_log::test]
+#[cfg_attr(not(feature = "docker-tests"), ignore = "docker tests not enabled")]
 fn elasticsearch_7_17_17() {
-    let jars = jars_in_container("testdata/images/elasticsearch_7_17_17.tar");
+    let jars = jars_in_container("elasticsearch:7.17.17");
     assert_eq_jars!(expect::elasticsearch_7_17_17::list(), jars);
 }
 #[test_log::test]
+#[cfg_attr(not(feature = "docker-tests"), ignore = "docker tests not enabled")]
 fn bitnami_elasticsearch_7_17_17_debian_11_r4() {
-    let jars = jars_in_container("testdata/images/bitnami_elasticsearch_7_17_17_debian_11_r4.tar");
+    let jars = jars_in_container("bitnami/elasticsearch:7.17.7-debian-11-r4");
     assert_eq_jars!(
         expect::bitnami_elasticsearch_7_17_17_debian_11_r4::list(),
         jars
     );
 }
 #[test_log::test]
+#[cfg_attr(not(feature = "docker-tests"), ignore = "docker tests not enabled")]
 fn hazelcast_managementcenter_5_3_1() {
-    let jars = jars_in_container("testdata/images/hazelcast_managementcenter_5_3_1.tar");
+    let jars = jars_in_container("hazelcast/management-center:5.3.1");
     assert_eq_jars!(expect::hazelcast_managementcenter_5_3_1::list(), jars);
 }
 
 /// Extracts the container (saved via `docker save`) and finds JAR files inside any layer.
 /// For each one found, fingerprints it and reports all those fingerprints along with their
 /// layer and path.
-///
-/// The path to the container should be from the crate root (the directory containing `Cargo.toml`).
 #[track_caller]
 #[tracing::instrument]
-fn jars_in_container(container: impl AsRef<Path> + std::fmt::Debug) -> Vec<DiscoveredJar> {
-    let container = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(container);
-    debug!("inspecting container");
+fn jars_in_container(container: &str) -> Vec<DiscoveredJar> {
+    // Rust libraries exist for interacting with docker directly,
+    // but since this is only for testing I think it's easier to interact via the shell.
+    let sh = xshell::Shell::new().expect("create shell");
+
+    debug!("pulling container");
+    xshell::cmd!(sh, "docker pull {container}")
+        .quiet()
+        .run()
+        .expect("pull container");
+
+    let dir = tempfile::tempdir().expect("create temp directory");
+    let container_file = lazy_regex::regex_replace_all!(r"[^A-Za-z0-9_]", container, "_");
+    let destination = dir.path().join(container_file.as_ref());
+    debug!(?destination, "saving container to disk");
+    xshell::cmd!(sh, "docker save {container} -o {destination}")
+        .quiet()
+        .run()
+        .expect("save container");
+
+    if !destination.exists() {
+        panic!("container does not exist at {destination:?}");
+    }
 
     // Visit each layer and fingerprint the JARs within.
-    let layers = list_container_layers(&container);
-    let archive = File::open(&container).expect("open file");
+    debug!("inspecting container");
+    let layers = list_container_layers(&destination);
+    let archive = File::open(&destination).expect("open file");
     let mut discoveries = Vec::new();
     for entry in unpack(archive).entries().expect("list entries") {
         let entry = entry.expect("read entry");

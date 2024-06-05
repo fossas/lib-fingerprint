@@ -15,6 +15,17 @@ fp-content-serialize-hex = ["hex"]
 # If this is specified along with `fp-content-serialize-hex`,
 # the standard serde operations prefer `fp-content-serialize-hex`.
 fp-content-serialize-base64 = ["base64"]
+
+# Enable full CI tests.
+ci = ["docker-tests"]
+
+# Enable tests which require docker.
+#
+# In CI, this requires Linux;
+# GitHub action runners for macOS and Windows don't have Docker.
+docker-tests = []
+
+# Dependency features, auto added.
 base64 = ["dep:base64"]
 hex = ["dep:hex"]
 
@@ -39,3 +50,6 @@ serde_json = "1.0.117"
 tar = "0.4.40"
 test-log = { version = "0.2.16", features = ["trace"] }
 maplit = "1.0.2"
+xshell = "0.2.6"
+tempfile = "3.10.1"
+lazy-regex = "3.1.0"

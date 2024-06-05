@@ -13,7 +13,7 @@ jobs:
         - host: ubuntu-latest
           setup: echo "no setup"
           build: cargo build --release
-          test: cargo nextest run --release
+          test: cargo nextest run --release --features ci
         - host: macos-latest
           setup: |
             rustup target add aarch64-apple-darwin &&
