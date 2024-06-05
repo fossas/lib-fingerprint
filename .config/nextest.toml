@@ -1,0 +1,6 @@
+[profile.default]
+
+[[profile.default.overrides]]
+# Tests that rely on docker retry since they rely on external resources.
+filter = 'test(docker)'
+retries = { backoff = "exponential", count = 5, delay = "5s", jitter = true }

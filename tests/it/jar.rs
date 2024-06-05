@@ -13,7 +13,10 @@ use std::{
 };
 
 use fingerprint::{Combined, Content, Kind};
+use itertools::Itertools;
 use serde::Deserialize;
+use sha2::{Digest, Sha256};
+use tap::Pipe as _;
 use tar::Entry;
 use tracing::{debug, info_span, trace};
 
@@ -35,13 +38,13 @@ macro_rules! assert_eq_jars {
 
 #[test_log::test]
 #[cfg_attr(not(feature = "docker-tests"), ignore = "docker tests not enabled")]
-fn elasticsearch_7_17_17() {
+fn docker_elasticsearch_7_17_17() {
     let jars = jars_in_container("elasticsearch:7.17.17");
     assert_eq_jars!(expect::elasticsearch_7_17_17::list(), jars);
 }
 #[test_log::test]
 #[cfg_attr(not(feature = "docker-tests"), ignore = "docker tests not enabled")]
-fn bitnami_elasticsearch_7_17_17_debian_11_r4() {
+fn docker_bitnami_elasticsearch_7_17_17_debian_11_r4() {
     let jars = jars_in_container("bitnami/elasticsearch:7.17.7-debian-11-r4");
     assert_eq_jars!(
         expect::bitnami_elasticsearch_7_17_17_debian_11_r4::list(),
@@ -50,7 +53,7 @@ fn bitnami_elasticsearch_7_17_17_debian_11_r4() {
 }
 #[test_log::test]
 #[cfg_attr(not(feature = "docker-tests"), ignore = "docker tests not enabled")]
-fn hazelcast_managementcenter_5_3_1() {
+fn docker_hazelcast_managementcenter_5_3_1() {
     let jars = jars_in_container("hazelcast/management-center:5.3.1");
     assert_eq_jars!(expect::hazelcast_managementcenter_5_3_1::list(), jars);
 }
@@ -123,7 +126,6 @@ fn jars_in_layer(layer: PathBuf, entry: Entry<impl Read>) -> Vec<DiscoveredJar> 
             let entry = buffer(entry);
             discoveries.push(DiscoveredJar {
                 fingerprint: Combined::from_buffer(entry).expect("fingerprint"),
-                layer: layer.clone(),
                 path,
             });
         });
@@ -175,15 +177,13 @@ fn buffer(mut reader: impl Read) -> Vec<u8> {
 
 #[derive(Debug, PartialEq, Eq)]
 struct DiscoveredJar {
-    layer: PathBuf,
     path: PathBuf,
     fingerprint: Combined,
 }
 
 impl DiscoveredJar {
-    fn new(layer: impl Into<PathBuf>, path: impl Into<PathBuf>, fp: impl Into<Combined>) -> Self {
+    fn new(path: impl Into<PathBuf>, fp: impl Into<Combined>) -> Self {
         Self {
-            layer: layer.into(),
             path: path.into(),
             fingerprint: fp.into(),
         }
@@ -194,17 +194,14 @@ impl DiscoveredJar {
 /// in a platform-independent manner.
 #[derive(Debug, PartialEq, Eq)]
 struct CmpJar {
-    layer: String,
     path: String,
     fingerprint: HashMap<Kind, Content>,
 }
 
 impl From<DiscoveredJar> for CmpJar {
     fn from(jar: DiscoveredJar) -> Self {
-        let into_string = |s: PathBuf| s.to_string_lossy().to_string();
         Self {
-            layer: into_string(jar.layer).replace('\\', "/"),
-            path: into_string(jar.path).replace('\\', "/"),
+            path: jar.path.to_string_lossy().to_string().replace('\\', "/"),
             fingerprint: jar.fingerprint.into_inner(),
         }
     }
@@ -212,8 +209,8 @@ impl From<DiscoveredJar> for CmpJar {
 
 impl std::cmp::Ord for CmpJar {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        match alphanumeric_sort::compare_str(&self.layer, &other.layer) {
-            std::cmp::Ordering::Equal => alphanumeric_sort::compare_str(&self.path, &other.path),
+        match alphanumeric_sort::compare_str(&self.path, &other.path) {
+            std::cmp::Ordering::Equal => order_kind_content(&self.fingerprint, &other.fingerprint),
             ord => ord,
         }
     }
@@ -223,6 +220,32 @@ impl std::cmp::PartialOrd for CmpJar {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         Some(self.cmp(other))
     }
+}
+
+fn order_kind_content(
+    a: &HashMap<Kind, Content>,
+    b: &HashMap<Kind, Content>,
+) -> std::cmp::Ordering {
+    let hash_a = hash_kind_content(a);
+    let hash_b = hash_kind_content(b);
+    hash_a.cmp(&hash_b)
+}
+
+/// Generate a hash of the map:
+/// - Entries are sorted by [`Kind`].
+/// - [`Content`]s are then hashed in sort order.
+///
+/// The intention isn't to make a _stable_ hash or anything,
+/// it's literally just to support ordering [`CmpJar`]
+/// in cases where the same path is read from multiple layers in an image.
+fn hash_kind_content(map: &HashMap<Kind, Content>) -> Vec<u8> {
+    map.iter()
+        .sorted_by(|(a, _), (b, _)| a.cmp(b))
+        .fold(Sha256::new(), |mut hasher, (_, v)| {
+            hasher.update(v.as_bytes());
+            hasher
+        })
+        .pipe(|hasher| hasher.finalize().as_slice().to_vec())
 }
 
 /// Not a full manifest, just the part we care about.

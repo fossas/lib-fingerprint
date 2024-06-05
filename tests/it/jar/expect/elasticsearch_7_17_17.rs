@@ -7,7 +7,6 @@ use super::combined;
 pub fn list() -> Vec<DiscoveredJar> {
     vec![
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/bin/elasticsearch-sql-cli-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "e0f340bb10a632d221f7ceb0d1ca3a8d23203ef428e14d2ebe037b00252f68a5",
@@ -16,7 +15,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/jdk/lib/jrt-fs.jar",
             combined! {
                Kind::JarRawV1 => "fda6923b9f32df9a02ad83699ceefbdafb408abfa3c8c917592653f53028db4c",
@@ -25,7 +23,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/HdrHistogram-2.1.9.jar",
             combined! {
                 Kind::JarClassV1 => "36369d225d43ba9449746c5151bc56030d741ec5069a79bba516383a78e0d93d",
@@ -34,7 +31,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "dd46c52be9f9d9f619fda1b004c64343ef3bce922a7250d6c8e8b29316d63bb8",
@@ -43,7 +39,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-cli-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "62eb697375fa4ab5cab180d212a46e62cf710f7a0832f99bcc9831b88dd56259",
@@ -52,7 +47,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-core-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "cc6ab596238354a915542ee0fa1e7869d13a84dfbb9b88f3e8317da7d8451bf7",
@@ -61,7 +55,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-geo-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "331bcd766ecd88403efebec0cb4d2c130ca4d06e16f027c5a6be877511abe79a",
@@ -70,7 +63,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-launchers-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "3861758cd4c43a8391310e0a5caac44acf8730376eefda433988dfc41bcd4843",
@@ -79,7 +71,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-log4j-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "601228abcb2f4a2ecab2f1da971fb99577061ef6128ed6eb79920c09cb20656f",
@@ -88,7 +79,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-lz4-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "275e886a1d13bde2030d6b16baf1bf4454bbcafe92f878850e9d0d8f4b481c67",
@@ -97,7 +87,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-plugin-classloader-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "d57f4ebb3e6a9f266936e470e5af037de335074881e5c95d94b4b5731961dece",
@@ -106,7 +95,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-secure-sm-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "780ea6b495eb4740bb393108b03c134395bd5972989d8bba5f87f2801802e794",
@@ -115,7 +103,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/elasticsearch-x-content-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "f88d2b7a6743a0b0c53780e41d1acf8ed43cd132d357d972cbe265364ab4e641",
@@ -124,7 +111,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/hppc-0.8.1.jar",
             combined! {
                 Kind::RawSha256 => "f540703478636d88f699f4666242e6fc9175a996c08ddceaf02106517b970406",
@@ -133,7 +119,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/jackson-core-2.14.2.jar",
             combined! {
                 Kind::JarClassV1 => "5e8e302f66351bce9b1b41b71b79baf7f51d6dd16139a8e41866faf5cb0bab0d",
@@ -142,7 +127,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/jackson-dataformat-cbor-2.14.2.jar",
             combined! {
                 Kind::RawSha256 => "c942726863a8b7e0483d30d9213f9dadc8b07eadf0767003a4fe6dc56daa7135",
@@ -151,7 +135,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/jackson-dataformat-smile-2.14.2.jar",
             combined! {
                 Kind::RawSha256 => "9c279bb29770de09289c14cf8862dd195112687cd7fde815919f54a9157ce213",
@@ -160,7 +143,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/jackson-dataformat-yaml-2.14.2.jar",
             combined! {
                 Kind::JarClassV1 => "b459a0a08a8c58a0180acc21787d11af4ec552021697f1d0c7a8bf211e9d2da4",
@@ -169,7 +151,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/java-version-checker-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "1b661649431bf66a202b3f5d2bae0eb0fcb3f8fa087928351ca8a97f2aba4545",
@@ -178,7 +159,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/jna-5.10.0.jar",
             combined! {
                 Kind::RawSha256 => "e335c10679f743207d822c5f7948e930319835492575a9dba6b94f8a3b96fcc8",
@@ -187,7 +167,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/joda-time-2.10.10.jar",
             combined! {
                 Kind::RawSha256 => "dd8e7c92185a678d1b7b933f31209b6203c8ffa91e9880475a1be0346b9617e3",
@@ -196,7 +175,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/jopt-simple-5.0.2.jar",
             combined! {
                 Kind::RawSha256 => "457877c79e038f390557db5f8e92c4436fb4f4b3ba63f28bc228500fee080193",
@@ -205,7 +183,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/log4j-api-2.17.1.jar",
             combined! {
                 Kind::JarClassV1 => "e456420a1a09c1e3ed22328c067c9d43d1ab969d06fa7529ed92e7df894764e6",
@@ -214,7 +191,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-analyzers-common-8.11.1.jar",
             combined! {
                 Kind::JarRawV1 => "d4c73f31b1267f22eccd55f117a0ad86e705bb5284b796fd9408aedb48591d29",
@@ -223,7 +199,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-backward-codecs-8.11.1.jar",
             combined! {
                 Kind::JarRawV1 => "78bd321ca006136c777f94841703de765592a3daed70b42c14de215b28fb428f",
@@ -232,7 +207,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-core-8.11.1.jar",
             combined! {
                 Kind::JarRawV1 => "16e949a443e6c2ac86258f6754539bd518fca2ab2615147b82d8b3e6b093181c",
@@ -241,7 +215,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-grouping-8.11.1.jar",
             combined! {
                 Kind::JarRawV1 => "f09a0215c8b5812bf0b003b8b9989216afb9af56e1869eb636cb65ec803b1fe5",
@@ -250,7 +223,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-highlighter-8.11.1.jar",
             combined! {
                 Kind::JarClassV1 => "d2f0c25a7c0c08b5e36bd76a0796fd61344bc240351b0bddd0dc7bfa6ab7988d",
@@ -259,7 +231,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-join-8.11.1.jar",
             combined! {
                 Kind::RawSha256 => "20a1912bfa2283519ee9c4b28eb559c0757187880e6783e04779ade44eb16757",
@@ -268,7 +239,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-memory-8.11.1.jar",
             combined! {
                 Kind::JarRawV1 => "d12dd9296186e6b5a9c43ee95c7028102f543e0e9eaab9385419e759dc6611c8",
@@ -277,7 +247,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-misc-8.11.1.jar",
             combined! {
                 Kind::JarRawV1 => "e7d891cd5f488afbd5b5b81ce42cea062ba1e832f55c89441797e1bcfb2a695f",
@@ -286,7 +255,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-queries-8.11.1.jar",
             combined! {
                 Kind::RawSha256 => "11fb2e90da5b4e6a6c26120bb80a2937a20a585d32236ed7c277048ba65f07ca",
@@ -295,7 +263,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-queryparser-8.11.1.jar",
             combined! {
                 Kind::JarClassV1 => "d77ae0518068d04fd76c85e01ddce9528bbd55ef233272e9073749eb969a7fb6",
@@ -304,7 +271,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-sandbox-8.11.1.jar",
             combined! {
                 Kind::JarClassV1 => "9d88cfebbc1e31cf6e9df3b5355c6fca570e9883a66d259ae06ca015d8cc8763",
@@ -313,7 +279,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-spatial3d-8.11.1.jar",
             combined! {
                 Kind::RawSha256 => "fb98a09f8da5e912b2c5dcfe6353373a3309cdbf11e64031462cd9d19bd89256",
@@ -322,7 +287,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lucene-suggest-8.11.1.jar",
             combined! {
                 Kind::JarRawV1 => "b678df5cf98757e9ed6af8143f5b7b2448d94f907f54d48520817b899092a787",
@@ -331,7 +295,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/lz4-java-1.8.0.jar",
             combined! {
                 Kind::JarRawV1 => "c5d86569d7e758f1cca5d639964845b7d5a0550e6165a184145aca3bbbb5f66a",
@@ -340,7 +303,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/snakeyaml-1.33.jar",
             combined! {
                 Kind::RawSha256 => "11ff459788f0a2d781f56a4a86d7e69202cebacd0273d5269c4ae9f02f3fd8f0",
@@ -349,7 +311,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/t-digest-3.2.jar",
             combined! {
                 Kind::JarClassV1 => "db500040a066ab5003b524b31dc0afe4c78894ec91be799fe815c11cb6ee1dda",
@@ -358,7 +319,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/geoip-cli/elasticsearch-geoip-cli-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "1cab1a1dac91b895de3bd802c44ffa68fa0762d1eec0c4767f7d11b9462d99e6",
@@ -367,7 +327,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/keystore-cli/keystore-cli-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "b01f752b5fa626e509805aef7e1e5a7ccf9b86a1769d3398b9b2755d6de694dc",
@@ -376,7 +335,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/plugin-cli/bc-fips-1.0.2.4.jar",
             combined! {
                 Kind::JarClassV1 => "8d326651df98de1c4d14e388f1078fab914731b32818dab194d643427956a580",
@@ -385,7 +343,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/plugin-cli/bcpg-fips-1.0.7.1.jar",
             combined! {
                 Kind::RawSha256 => "fea1a096c098395eb67d48700c349d5f75321ef0c7c6af9198bc38f4cc836622",
@@ -394,7 +351,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/plugin-cli/elasticsearch-plugin-cli-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "72f7efdfbc379afdfc26954434b6c94e0931dc24174a39b83a119a95aa6a90f4",
@@ -403,7 +359,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/security-cli/bcpkix-jdk18on-1.77.jar",
             combined! {
                 Kind::RawSha256 => "1ac7fe8efd5b2f38cdc165be5a0675734fe44808dab92707201f03a535d6f1b8",
@@ -412,7 +367,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/security-cli/bcprov-jdk18on-1.77.jar",
             combined! {
                 Kind::RawSha256 => "dabb98c24d72c9b9f585633d1df9c5cd58d9ad373d0cd681367e6a603a495d58",
@@ -421,7 +375,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/security-cli/bcutil-jdk18on-1.77.jar",
             combined! {
                 Kind::JarRawV1 => "e21cc80935d4be2352ac03cbb3ff1ef3cb6c19475c45900474fa042288eb4cc0",
@@ -430,7 +383,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/lib/tools/security-cli/elasticsearch-security-cli-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "7670dc9e05baba8828e8d005da86fbbad1e1be81eeb53dee8b1e17ffa589ec57",
@@ -439,7 +391,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/aggs-matrix-stats/aggs-matrix-stats-client-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "aa2a5bcac58731f1c102036b5030ba2b520728591696dde4dc45c6623127fdea",
@@ -448,7 +399,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/analysis-common/analysis-common-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "7e079430c48683162a073207cdbbb2a1c9ab4d1847804ee7d7f09ec0ede6c37b",
@@ -457,7 +407,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/constant-keyword/constant-keyword-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "b6128cb401331f458f6a74efe1c8ac60dcaed1c2ff2088c7819a228af5801f6b",
@@ -466,7 +415,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/frozen-indices/frozen-indices-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "08a4c2ccec8e872873f0e20fc497700d1e7342e628deb04f11d26762b11f6d38",
@@ -475,7 +423,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-common/elasticsearch-dissect-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "63c18fa87875fab72bd469449040bb9884204414557e5f6ffdcb8da9cfa98e87",
@@ -484,7 +431,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-common/elasticsearch-grok-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "e6b6ef74174dec6b1c50d3cb6bf82d73413e56d9d038ddc7e06a26e1eb6fea14",
@@ -493,7 +439,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-common/httpclient-4.5.14.jar",
             combined! {
                 Kind::RawSha256 => "c8bc7e1c51a6d4ce72f40d2ebbabf1c4b68bfe76e732104b04381b493478e9d6",
@@ -502,7 +447,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-common/httpcore-4.4.12.jar",
             combined! {
                 Kind::JarClassV1 => "533767ad9f53f96e67b0127cefe8aac02d5879ed900bb1d9fa412e06e1f5de07",
@@ -511,7 +455,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-common/ingest-common-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "13be878c5a9b69255e27859fe6338a9c0da8f9b5b08c1d53738be45e83e95889",
@@ -520,7 +463,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-common/jcodings-1.0.44.jar",
             combined! {
                 Kind::JarClassV1 => "4dd715e0832222e95234af07d22995a0cc40fdc7328ec88b355877d060650532",
@@ -529,7 +471,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-common/joni-2.1.29.jar",
             combined! {
                 Kind::RawSha256 => "aa4b71415682f3d7fa44083cd94a9ec48478ec3b9c30947b4152913d41b1004d",
@@ -538,7 +479,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-geoip/geoip2-2.13.1.jar",
             combined! {
                 Kind::JarClassV1 => "ca8671b9d93804c1c4a51d52661c75b0ced57bb4d0b00568007af6bfb7c2d791",
@@ -547,7 +487,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-geoip/ingest-geoip-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "80a566fa3297dde8bc4069314ef61f7c80e53cd7ba3efb9b366828a2a03a1b44",
@@ -556,7 +495,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-geoip/jackson-annotations-2.14.2.jar",
             combined! {
                 Kind::JarClassV1 => "b2af55aad6e191a799549d6cfdf506c9a0c23ed50ff9451e4884ccc7cf37a82d",
@@ -565,7 +503,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-geoip/jackson-databind-2.14.2.jar",
             combined! {
                 Kind::JarRawV1 => "4be78541b9f3ff7c2558b915caf467a6f248e6f6ef3bc36c46b17a9ac3acf380",
@@ -574,7 +511,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-geoip/maxmind-db-1.3.1.jar",
             combined! {
                 Kind::RawSha256 => "cc955e897306baadad7b16d58918bb020c847010d458a603a0e53b5a47bd0961",
@@ -583,7 +519,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/ingest-user-agent/ingest-user-agent-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "22cec5fac98e1a84d7c81bfde61233066e9c11a417853a7d4b8350ad1cbd14fb",
@@ -592,7 +527,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/commons-codec-1.15.jar",
             combined! {
                 Kind::JarClassV1 => "130c47d01c72e33a0332a95d4a1d8718a2465ac015ec6b3863174618caf58e2f",
@@ -601,7 +535,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/commons-logging-1.1.3.jar",
             combined! {
                 Kind::JarRawV1 => "4f7531b4462baf4a8a39ec7199fa80e9089017e8df2fc2aff9ad9fc8ed90f871",
@@ -610,7 +543,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/elasticsearch-rest-client-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "08b04d8bc63a2cc976bdad6b6b043d3f17e3c0437450ccea6be2c7316d806c8d",
@@ -619,7 +551,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/elasticsearch-ssl-config-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "b2b9e1eeb2c446a19c4282d941aba1c26f453959bde71c33f779546923182c22",
@@ -628,7 +559,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/httpasyncclient-4.1.4.jar",
             combined! {
                 Kind::RawSha256 => "50e981a8e567a16ebdad104605b156540a863459fa127b8ba647f310dfc83ef8",
@@ -637,7 +567,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/httpclient-4.5.14.jar",
             combined! {
                 Kind::RawSha256 => "c8bc7e1c51a6d4ce72f40d2ebbabf1c4b68bfe76e732104b04381b493478e9d6",
@@ -646,7 +575,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/httpcore-4.4.12.jar",
             combined! {
                 Kind::RawSha256 => "ab765334beabf0ea024484a5e90a7c40e8160b145f22d199e11e27f68d57da08",
@@ -655,7 +583,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/httpcore-nio-4.4.12.jar",
             combined! {
                 Kind::JarRawV1 => "24e4f97e5ff3f463dc40dbdd72e84f11c506e479c31e5a966dc92f68367ef631",
@@ -664,7 +591,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/kibana-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "77eadfe84ff6075af9b6003ccdea8437872a617dbe1e69b932cf78042975e073",
@@ -673,7 +599,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/kibana/reindex-client-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "711a6e126ab14e65b90a7bce7adb29004fbb365afe7563aa2160bd47c43cb2ef",
@@ -682,7 +607,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-expression/antlr4-runtime-4.5.1-1.jar",
             combined! {
                 Kind::RawSha256 => "ffca72bc2a25bb2b0c80a58cee60530a78be17da739bb6c91a8c2e3584ca099e",
@@ -691,7 +615,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-expression/asm-5.0.4.jar",
             combined! {
                 Kind::JarRawV1 => "6c75e4cc2dd9e51523115291b81a99b91fa95693a4768aaa22c76007fea80b1d",
@@ -700,7 +623,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-expression/asm-commons-5.0.4.jar",
             combined! {
                 Kind::JarRawV1 => "74c6818b325f573cad4e4fadf0be091b6a19ddd17cad95f077cd5392a4b23ed8",
@@ -709,7 +631,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-expression/asm-tree-5.0.4.jar",
             combined! {
                 Kind::RawSha256 => "c3670fa836fac4cde743840f671a7d52a32eb0a844e2824eaedaf3a47f5c8399",
@@ -718,7 +639,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-expression/lang-expression-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "608058104cdac85daaf3871b51931d77ff48f401a8d715b58d11cc6ce841d7b9",
@@ -727,7 +647,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-expression/lucene-expressions-8.11.1.jar",
             combined! {
                 Kind::JarRawV1 => "202d97b9c0a70e6c80e31772490c264d33060623d36757d5452b30c7f1bb93d9",
@@ -736,7 +655,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-mustache/compiler-0.9.6.jar",
             combined! {
                 Kind::JarClassV1 => "636d900e125852c79678a168f1b1a285af804a3538bf94907437cd25e5df5e08",
@@ -745,7 +663,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-mustache/lang-mustache-client-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "b22bf08282db73ebe65bedfd8fad1a91edd6f812422a1a2769964345ef1d1ed7",
@@ -754,7 +671,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-painless/antlr4-runtime-4.5.3.jar",
             combined! {
                 Kind::JarRawV1 => "48d8ab8b98757a6437ada2fa196645abc4be5cb192a3a9f50aa670875c5417a3",
@@ -763,7 +679,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-painless/asm-7.2.jar",
             combined! {
                 Kind::JarClassV1 => "f4c640b0e933f55e567e0c6ed31609515a1da985706e87ae597d8914a541c490",
@@ -772,7 +687,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-painless/asm-analysis-7.2.jar",
             combined! {
                 Kind::RawSha256 => "be922aae60ff1ff1768e8e6544a38a7f92bd0a6d6b0b9791f94955d1bd453de2",
@@ -781,7 +695,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-painless/asm-commons-7.2.jar",
             combined! {
                 Kind::RawSha256 => "0e86b8b179c5fb223d1a880a0ff4960b6978223984b94e62e71135f2d8ea3558",
@@ -790,7 +703,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-painless/asm-tree-7.2.jar",
             combined! {
                 Kind::RawSha256 => "c063f5a67fa03cdc9bd79fd1c2ea6816cc4a19473ecdfbd9e9153b408c6f2656",
@@ -799,7 +711,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-painless/asm-util-7.2.jar",
             combined! {
                 Kind::JarRawV1 => "ab429a0e53bb8b36642e3c4739ef4624a31bc852032a64d3045b52c6a1f6e155",
@@ -808,7 +719,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-painless/lang-painless-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "796b362979443cf399fc2072a8191e31fe6e2443a51837a362ef3487a70f9ca8",
@@ -817,7 +727,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/lang-painless/spi/elasticsearch-scripting-painless-spi-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "3be5238d3a1de31b39e20f6876bd6166226059fab979c84a4bbbc5625b70939a",
@@ -826,7 +735,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/legacy-geo/jts-core-1.15.0.jar",
             combined! {
                 Kind::JarRawV1 => "4462ea26e83f4af4dcd63f3bf039478a1982bccef562f637865439fb5aa985df",
@@ -835,7 +743,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/legacy-geo/legacy-geo-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "7afd0a91ed89927904c7bd1d064327d069a5781bf9a60ebe3258390f1f53a289",
@@ -844,7 +751,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/legacy-geo/lucene-spatial-extras-8.11.1.jar",
             combined! {
                 Kind::JarClassV1 => "7d0176090e6d72b340cebbfd307bcee0fb9b6c6cbdbe8e45276fcb76b0f67a4c",
@@ -853,7 +759,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/legacy-geo/spatial4j-0.7.jar",
             combined! {
                 Kind::JarClassV1 => "d46c77130b99e0fe578ac7ae87e44bff6e3d42e16193bb02177064c4c1a92ef9",
@@ -862,7 +767,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/mapper-extras/mapper-extras-client-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "001fa1d7f8c7ef8d4ea9c2f98b85ca021b0f3b339c006e252a89d05b9c9bc6c3",
@@ -871,7 +775,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/mapper-version/mapper-version-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "86555ae5b34c6c1553e9bf2eaf06657f26d58ba64dd24b11ef1eb3d5cad6dc27",
@@ -880,7 +783,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/parent-join/parent-join-client-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "c5b288f797c7e7e06ce2230d7acfc5bbb3faae0e1f19eb53b7f85675a05a16a7",
@@ -889,7 +791,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/percolator/percolator-client-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "4dd6d980a2da4dd00e1e6b3b127e862656fc3bedd4fe8cd0c5dbe080c12890ce",
@@ -898,7 +799,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/rank-eval/rank-eval-client-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "f975e7111bf29236b388e2b47072c640715d137f7e7d320f94eda1a951218257",
@@ -907,7 +807,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/commons-codec-1.15.jar",
             combined! {
                 Kind::JarRawV1 => "54324aabfbe16b3cf75c314676de4524a6d2cf3250ac8ea9a61507fc8ff79bd3",
@@ -916,7 +815,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/commons-logging-1.1.3.jar",
             combined! {
                 Kind::JarClassV1 => "35d9396d32fb07b599fc1e3a43f74cfc024b048592a88d7dab26e65a143322a6",
@@ -925,7 +823,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/elasticsearch-rest-client-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "0c09988e2c90bf3b57c1ace621095fdaf1232fed467a8306c8228975a313a77b",
@@ -934,7 +831,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/elasticsearch-ssl-config-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "ffa840a844f490041aa65bbc4763e3b74b926bcefb8f97eb19f665ee9b12b1d2",
@@ -943,7 +839,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/httpasyncclient-4.1.4.jar",
             combined! {
                 Kind::RawSha256 => "50e981a8e567a16ebdad104605b156540a863459fa127b8ba647f310dfc83ef8",
@@ -952,7 +847,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/httpclient-4.5.14.jar",
             combined! {
                 Kind::JarRawV1 => "ce7270d53369efb990e03e5075b51f9c732fcb088f9cb55eda788cdf46aa69a6",
@@ -961,7 +855,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/httpcore-4.4.12.jar",
             combined! {
                 Kind::RawSha256 => "ab765334beabf0ea024484a5e90a7c40e8160b145f22d199e11e27f68d57da08",
@@ -970,7 +863,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/httpcore-nio-4.4.12.jar",
             combined! {
                 Kind::RawSha256 => "11448f4b5c7f13d9396a67b33aa938d05f660665e0f14fd08e25acfd3c20ae80",
@@ -979,7 +871,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/reindex/reindex-client-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "5179d66d44a1049c11043ac0063c3074df838479dde9345dc45e2235b58f265f",
@@ -988,7 +879,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/repositories-metering-api/repositories-metering-api-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "e60896c765664d3ce70ed924a68bceafff2d7bc7cb55c1e718e060ef7891ae80",
@@ -997,7 +887,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/repository-encrypted/repository-encrypted-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "cef5f67b32aaa97c9f9c3a91cf1fdbfcc2d3da385d8761857498a5695fc19e58",
@@ -1006,7 +895,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/repository-url/commons-codec-1.15.jar",
             combined! {
                 Kind::JarRawV1 => "54324aabfbe16b3cf75c314676de4524a6d2cf3250ac8ea9a61507fc8ff79bd3",
@@ -1015,7 +903,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/repository-url/commons-logging-1.1.3.jar",
             combined! {
                 Kind::RawSha256 => "70903f6fc82e9908c8da9f20443f61d90f0870a312642991fe8462a0b9391784",
@@ -1024,7 +911,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/repository-url/httpclient-4.5.14.jar",
             combined! {
                 Kind::RawSha256 => "c8bc7e1c51a6d4ce72f40d2ebbabf1c4b68bfe76e732104b04381b493478e9d6",
@@ -1033,7 +919,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/repository-url/httpcore-4.4.12.jar",
             combined! {
                 Kind::JarRawV1 => "d9577e26a79c8ea57f228e361d90190bd3b4897e6d29faea4bf12649b50ab690",
@@ -1042,7 +927,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/repository-url/log4j-1.2-api-2.17.1.jar",
             combined! {
                 Kind::JarRawV1 => "b6fa23d8eb7cad6b08c18f318a869f85778b0cdc9e9eac56a9fde7db263fdd72",
@@ -1051,7 +935,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/repository-url/repository-url-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "cea3ef483be29377186d52fdb1a2300a53cb2a59fe6f046a5744b9e6a304ee18",
@@ -1060,7 +943,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/runtime-fields-common/elasticsearch-dissect-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "4b0570e1077894effaac3b5efde9bc9b03e15e0ef88d9a58df99f1ba476020cd",
@@ -1069,7 +951,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/runtime-fields-common/elasticsearch-grok-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "fee1097201de7908879f65cdaf0fc54bc60a4e023450ca1f9eaf3ffb7b14bc84",
@@ -1078,7 +959,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/runtime-fields-common/jcodings-1.0.44.jar",
             combined! {
                 Kind::RawSha256 => "49190d6ad09056de57d7ed41ed5b4b105e033557b5dd170702decdcf05ee341a",
@@ -1087,7 +967,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/runtime-fields-common/joni-2.1.29.jar",
             combined! {
                 Kind::RawSha256 => "aa4b71415682f3d7fa44083cd94a9ec48478ec3b9c30947b4152913d41b1004d",
@@ -1096,7 +975,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/runtime-fields-common/runtime-fields-common-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "89d87db38e90ac8644866fff394a287f3532deed42bcae70a3fcfacc3c6bc842",
@@ -1105,7 +983,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/search-business-rules/search-business-rules-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "a63ac077e612d066d2f724bf9a0fcba7eea3f3fe88e775749910971ea17da709",
@@ -1114,7 +991,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/searchable-snapshots/preallocate-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "99dd11c66ab352f003adcdb42a2fede7cc91d196ca14c7f24faed294f527a819",
@@ -1123,7 +999,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/searchable-snapshots/searchable-snapshots-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "da2cd1b6483d9e8d3777a8691ae8bb8a4e66929f178b8e43d3cecf78d4762b62",
@@ -1132,7 +1007,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/snapshot-repo-test-kit/snapshot-repo-test-kit-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "cc25371afdf8bdd1792cb03e7064dd74ed941d45d2976cc7c6f9bee35218cde2",
@@ -1141,7 +1015,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/spatial/spatial-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "474a3b7995bbefb730cfa28ed3dc980659ed475c750a1f733438507785be46b0",
@@ -1150,7 +1023,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transform/transform-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "6064123301cc9c6deab947107e7f302291c943c54679cd01a644a58478984bdf",
@@ -1159,7 +1031,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/netty-buffer-4.1.94.Final.jar",
             combined! {
                 Kind::RawSha256 => "8066ee7c49f9f29da96ee62f7cb13bee022cb4b68e51437b33da3b6d01398f13",
@@ -1168,7 +1039,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/netty-codec-4.1.94.Final.jar",
             combined! {
                 Kind::JarClassV1 => "cba835a85d54eb82d0f3689a0023852723a1534797e21fbcf4576851ac88980e",
@@ -1177,7 +1047,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/netty-codec-http-4.1.94.Final.jar",
             combined! {
                 Kind::JarRawV1 => "ba79f3948d040f62f54e0f3ff230fa42be35f445e72e4df0e8dd2e46b72c5e2e",
@@ -1186,7 +1055,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/netty-common-4.1.94.Final.jar",
             combined! {
                 Kind::JarClassV1 => "df35e6272db29383a70a30283fe01d0ef17b21d93411e987724497caf76f4788",
@@ -1195,7 +1063,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/netty-handler-4.1.94.Final.jar",
             combined! {
                 Kind::JarRawV1 => "fa3a5918066bfa89e8e098e87b5badafe9e8bcfb5844670f0d9c29de799ad72c",
@@ -1204,7 +1071,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/netty-resolver-4.1.94.Final.jar",
             combined! {
                 Kind::JarRawV1 => "ff2173856cfff7a6ec7e27ce82713140f62f74bb93708a8efa25ca61d7263099",
@@ -1213,7 +1079,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/netty-transport-4.1.94.Final.jar",
             combined! {
                 Kind::JarClassV1 => "13238f2611717f6bdff7a9e78b76f35a07953b4912f017e79ad0482da577f4ac",
@@ -1222,7 +1087,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/netty-transport-native-unix-common-4.1.94.Final.jar",
             combined! {
                 Kind::JarRawV1 => "bc816575ecf9fb2e8ca92608613588d6fcb9979a57f0274a54bae84206ed015a",
@@ -1231,7 +1095,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/transport-netty4/transport-netty4-client-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "41bf923024322ed5f877589c10aef34e8558fddf842fb0199ec39bac9d26a571",
@@ -1240,7 +1103,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/unsigned-long/unsigned-long-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "a3dead2cd7168fee5c28dc4b167738bc866fe083f0e9af1fd060ed3e7122c368",
@@ -1249,7 +1111,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/vector-tile/log4j-slf4j-impl-2.17.1.jar",
             combined! {
                 Kind::RawSha256 => "e9a03720e5d5076009c2530635da9d08485e28a0b0ec20708dadc51afb78e41e",
@@ -1258,7 +1119,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/vector-tile/mapbox-vector-tile-3.1.0.jar",
             combined! {
                 Kind::RawSha256 => "e2bb4c89fae43c6057a88f5d3b11256e78a255467e31654672d72c7b228de435",
@@ -1267,7 +1127,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/vector-tile/protobuf-java-3.16.3.jar",
             combined! {
                 Kind::RawSha256 => "6d3758b483e1ac7505649371a5b058a717260ef470100fefad7a1e2aba75e06f",
@@ -1276,7 +1135,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/vector-tile/slf4j-api-1.6.2.jar",
             combined! {
                 Kind::RawSha256 => "c26413df1741466d8bec549a4b7f6480acb2ac928b156be8c5e3feaf9cba1b59",
@@ -1285,7 +1143,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/vector-tile/vector-tile-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "5ff0aee527ca41e2b7e0006d5a8945738a0942929d531228c0cde3b9dff9de6d",
@@ -1294,7 +1151,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/vectors/vectors-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "3bab66be81fe77a01454c7b6494ea07b1476cf0b9e6e7b8f5e662ecb8fbe9d5f",
@@ -1303,7 +1159,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/wildcard/wildcard-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "0f24d88d123d1e4d267dad0d982a724e133670800f0790867a21cbb7b7d53401",
@@ -1312,7 +1167,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-aggregate-metric/x-pack-aggregate-metric-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "93bcde8f57ac5767cfd4411d06c5318567dde903320932ca43373fbd1579eee0",
@@ -1321,7 +1175,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-analytics/commons-math3-3.6.1.jar",
             combined! {
                 Kind::JarClassV1 => "6bf92ce1f74505c615e5224765586998b0f9aecfa2d790479cd668f28d7101dd",
@@ -1330,7 +1183,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-analytics/x-pack-analytics-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "dc358155cf56d1bb2043a6da08440940b068540f9de18abbe5ad4a8984283bb7",
@@ -1339,7 +1191,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-async/x-pack-async-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "6e0eec7f2d2d6b49f57719bdae004760dae874521624b0e5351bcfedb41d4766",
@@ -1348,7 +1199,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-async-search/x-pack-async-search-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "06ea3b05b1d3901d0fad3d5794c005d0949273cacf18404ba1cc3428628d31c9",
@@ -1357,7 +1207,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-autoscaling/x-pack-autoscaling-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "29272e1b63f1ff5ec9d3974f30a51a89a5ff708ccb7bdc42e37875d261e84d0a",
@@ -1366,7 +1215,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ccr/x-pack-ccr-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "2879c14f15326ef71704c2d255d94d9f2bbe0632b2719ffc1139758af7f7f150",
@@ -1375,7 +1223,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/commons-codec-1.15.jar",
             combined! {
                 Kind::RawSha256 => "b3e9f6d63a790109bf0d056611fbed1cf69055826defeb9894a71369d246ed63",
@@ -1384,7 +1231,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/commons-logging-1.1.3.jar",
             combined! {
                 Kind::RawSha256 => "70903f6fc82e9908c8da9f20443f61d90f0870a312642991fe8462a0b9391784",
@@ -1393,7 +1239,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/elasticsearch-nio-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "59e545296245fa7bd02c59addae9d6838dbf9d617a66e4b6e008709284394633",
@@ -1402,7 +1247,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/elasticsearch-ssl-config-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "ffa840a844f490041aa65bbc4763e3b74b926bcefb8f97eb19f665ee9b12b1d2",
@@ -1411,7 +1255,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/httpasyncclient-4.1.4.jar",
             combined! {
                 Kind::JarRawV1 => "45f280f8ed6c9600a41afc2bf6f73dbd96bab37c0cd0bf66e52f916c9c57a9a4",
@@ -1420,7 +1263,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/httpclient-4.5.14.jar",
             combined! {
                 Kind::JarRawV1 => "ce7270d53369efb990e03e5075b51f9c732fcb088f9cb55eda788cdf46aa69a6",
@@ -1429,7 +1271,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/httpcore-4.4.12.jar",
             combined! {
                 Kind::JarClassV1 => "533767ad9f53f96e67b0127cefe8aac02d5879ed900bb1d9fa412e06e1f5de07",
@@ -1438,7 +1279,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/httpcore-nio-4.4.12.jar",
             combined! {
                 Kind::JarClassV1 => "46e99f783b2e361033e0b5d74193643715b4faa2037d6aaf39aa1bf93fc05adf",
@@ -1447,7 +1287,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/log4j-1.2-api-2.17.1.jar",
             combined! {
                 Kind::JarRawV1 => "b6fa23d8eb7cad6b08c18f318a869f85778b0cdc9e9eac56a9fde7db263fdd72",
@@ -1456,7 +1295,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/netty-buffer-4.1.94.Final.jar",
             combined! {
                 Kind::JarClassV1 => "4edebb866fd1d2ada39996f6aa81032948c4890a009b7fd2c8d8fee6ebb0dc94",
@@ -1465,7 +1303,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/netty-codec-4.1.94.Final.jar",
             combined! {
                 Kind::JarClassV1 => "cba835a85d54eb82d0f3689a0023852723a1534797e21fbcf4576851ac88980e",
@@ -1474,7 +1311,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/netty-codec-http-4.1.94.Final.jar",
             combined! {
                 Kind::RawSha256 => "1ada4580f68cd17a534fb3c0337087073223a76cb77304dbe5a1b19df3d53c2f",
@@ -1483,7 +1319,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/netty-common-4.1.94.Final.jar",
             combined! {
                 Kind::RawSha256 => "cb8d84a3e63aea90d0d7a333a02e50ac751d2b05db55745d981b5eff893f647b",
@@ -1492,7 +1327,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/netty-handler-4.1.94.Final.jar",
             combined! {
                 Kind::JarRawV1 => "fa3a5918066bfa89e8e098e87b5badafe9e8bcfb5844670f0d9c29de799ad72c",
@@ -1501,7 +1335,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/netty-resolver-4.1.94.Final.jar",
             combined! {
                 Kind::RawSha256 => "bd26e9bc5e94e2d3974a93fdf921658eff4f033bfd4c5208607760ab54298617",
@@ -1510,7 +1343,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/netty-transport-4.1.94.Final.jar",
             combined! {
                 Kind::JarRawV1 => "29071fb08fb276b13b55127deb4e9c9812375a693e17583799f853be44c4b6df",
@@ -1519,7 +1351,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/netty-transport-native-unix-common-4.1.94.Final.jar",
             combined! {
                 Kind::RawSha256 => "27d0dff1cd743190279becacfb372fe4d45b266edafad9f1c6c01b04d00280eb",
@@ -1528,7 +1359,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/transport-netty4-client-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "41bf923024322ed5f877589c10aef34e8558fddf842fb0199ec39bac9d26a571",
@@ -1537,7 +1367,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/transport-nio-client-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "414b5707757d4e3d3f7bc094c65ddf8d6cc9f6428fadeaf5c214fc97754bf7fe",
@@ -1546,7 +1375,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/unboundid-ldapsdk-4.0.8.jar",
             combined! {
                 Kind::JarRawV1 => "c8aad0122c5a74a6831693beb2565ab24feea8ceb8b31b2e19d578a3f53526ec",
@@ -1555,7 +1383,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-core/x-pack-core-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "3fa7623dfb6c7b249590851847bf294736166b7fcf0573137b53e050a42be52d",
@@ -1564,7 +1391,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-data-streams/x-pack-data-streams-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "699d78d2ac7211ea4197b47469aac438d520d11a1defa725dd10e395ac6049c2",
@@ -1573,7 +1399,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-deprecation/elasticsearch-rest-client-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "91cfab57383a284c826a6dd513dcfba309aea0b473af18582552c18c8b5dd078",
@@ -1582,7 +1407,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-deprecation/elasticsearch-rest-client-sniffer-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "a1dd5002b52f0cc9b2f37176ce492036514df0e26fc693b0572a549d53969875",
@@ -1591,7 +1415,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-deprecation/x-pack-deprecation-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "4578d8b8520ca7609749fa1426eb43b9dccc4aa6c28a0ba27021e9b3a4144aa8",
@@ -1600,7 +1423,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-deprecation/x-pack-monitoring-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "ee5bf2c4c90beb2c806dfc7a061446115eaf485a7149e5c35e01f08670dc92d4",
@@ -1609,7 +1431,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-enrich/elasticsearch-rest-client-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "0c09988e2c90bf3b57c1ace621095fdaf1232fed467a8306c8228975a313a77b",
@@ -1618,7 +1439,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-enrich/reindex-client-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "16cad00497cfd6774128943c04a54c160ba6a3f6d7d7711256e1c1cada75a926",
@@ -1627,7 +1447,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-enrich/x-pack-enrich-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "fc5c2352505661c67fad848839475c06e5ad1cc152c1ba0e9f2452ee380c2cad",
@@ -1636,7 +1455,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-eql/x-pack-eql-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "b07ed4f84c9ea621633d90462f35d56af85f5c1b5008c8bc119c13539bfadbe0",
@@ -1645,7 +1463,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-fleet/x-pack-fleet-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "7d0b9b00ebba4fd2b66f1ca70dec6b63bb7f19d3c99f194538b118d968d0bca5",
@@ -1654,7 +1471,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-graph/x-pack-graph-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "58fd765ebc75520cbb8eb4a37c9d5438a4c91d3c0f03865c66132ca090741ef9",
@@ -1663,7 +1479,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/cryptacular-1.2.4.jar",
             combined! {
                 Kind::JarClassV1 => "cc49125e2781a6a2e6fa1b2202d2f3ec7879ec0df717421e4108dd24b5d97309",
@@ -1672,7 +1487,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/guava-19.0.jar",
             combined! {
                 Kind::JarRawV1 => "c44bee0c1835c70c899b3e67b16d1eb2961e291e614d6213bdfbb283e1332937",
@@ -1681,7 +1495,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/httpclient-cache-4.5.14.jar",
             combined! {
                 Kind::JarClassV1 => "8fa457b332a78ec94d87f88404fff79090c100ddf2ffd564efc03d7dbe7789a5",
@@ -1690,7 +1503,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/java-support-7.5.1.jar",
             combined! {
                 Kind::RawSha256 => "391d97def8b84474176f4144012be7a67ed3f77ab4111ef41e4ed232f9e07b64",
@@ -1699,7 +1511,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/log4j-slf4j-impl-2.17.1.jar",
             combined! {
                 Kind::JarClassV1 => "9ad437ba29a9f5f245d4ccd6fc067aaa9a4e02dc7c677d61ffbc395738971862",
@@ -1708,7 +1519,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/metrics-core-3.2.2.jar",
             combined! {
                 Kind::JarClassV1 => "128a2a3a64c5bb2ac06d949b38774d0b6db58aeb330caaed07fb50b28711be78",
@@ -1717,7 +1527,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-core-3.4.5.jar",
             combined! {
                 Kind::JarClassV1 => "30206cc29f4da57fdd128cfd01c1ac896ec11ae3ca1931928f643a32abcaebc0",
@@ -1726,7 +1535,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-messaging-api-3.4.5.jar",
             combined! {
                 Kind::JarClassV1 => "b9b561c29bac7d7103458e87323b079696dae6f098307a6342f6cbaf6ed10395",
@@ -1735,7 +1543,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-messaging-impl-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "7cd6075a4590120d7863a83d6619c3f094776c6ebe542a33d48ca4901d70cb50",
@@ -1744,7 +1551,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-profile-api-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "e04c83aa6115da14878c642d008586ff11c0263ad723a3153f7153806da9c5a0",
@@ -1753,7 +1559,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-profile-impl-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "bc67c64652f060d86b64649ca0345dd0c9e49cc622bd6ed7637e41845cd2db33",
@@ -1762,7 +1567,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-saml-api-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "5a1f3ab432f5163df8fbf7d0083bab9801a183d7544ac60b7f4bbccc7f59bc18",
@@ -1771,7 +1575,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-saml-impl-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "540234ba1c0ae9b4150a5a06bbcf0108a4797a5704801c2db937b058b04f1ab9",
@@ -1780,7 +1583,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-security-api-3.4.5.jar",
             combined! {
                 Kind::JarClassV1 => "8c52fab5aa69ca0be3dad921d2ed8631252de45981589ba363cc6430e3cb214a",
@@ -1789,7 +1591,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-security-impl-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "35b28d8b5be147355c012370bd55295a268d29afc7c91454064b655fc21867f2",
@@ -1798,7 +1599,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-soap-api-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "841427d8eecec98287f4fdc5fc9acc706db16692fddc1a2adbefc6fd50f7f627",
@@ -1807,7 +1607,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-soap-impl-3.4.5.jar",
             combined! {
                 Kind::JarClassV1 => "74db32205f0917798c4bf629dc181282ab8de9086440037185d6b0fea419041d",
@@ -1816,7 +1615,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-storage-api-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "5d64e2aa94e440413f063124e1bd5ea14008fa0611854c9ef508eadc57871998",
@@ -1825,7 +1623,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-storage-impl-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "d7cfbce5fb8e7b6c0fa9c690cb0ec801cfe63d51798795452df3177d5838cefc",
@@ -1834,7 +1631,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-xmlsec-api-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "a42ca8103feba47d644962e1102c07753fcf8f4f38191afb7e06d73c9a3d1c91",
@@ -1843,7 +1639,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/opensaml-xmlsec-impl-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "6bb4be41b1aa9e9f6a122504b77cc85a16f11427fb9ecd6d096bbaf0e5a882df",
@@ -1852,7 +1647,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/slf4j-api-1.6.2.jar",
             combined! {
                 Kind::JarRawV1 => "51bf440ef88e6f86d2bb6097c537b5afaf8ca93a7fe4a3ee1a203113a6f279d3",
@@ -1861,7 +1655,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/x-pack-identity-provider-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "eece9bb28f366440830bfa484b151407375b3d5a6a30a78ad03bb74d4a9f9d53",
@@ -1870,7 +1663,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-identity-provider/xmlsec-2.1.4.jar",
             combined! {
                 Kind::JarRawV1 => "f3d89c5f5cbbd574c6e0553e412760d6d0c0a9847e3a79b0c4d4df2b040f6e5c",
@@ -1879,7 +1671,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ilm/x-pack-ilm-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "3c16485cba2c4e479bdb070d309f1c207ba952f6c7363cb850b4fcb2d868714e",
@@ -1888,7 +1679,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-logstash/x-pack-logstash-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "02e0fcf1707016cbf78a8c7b7a6e56750abb20d23f8b8dc86bd4a4af9a5596a6",
@@ -1897,7 +1687,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ml/commons-math3-3.6.1.jar",
             combined! {
                 Kind::JarClassV1 => "6bf92ce1f74505c615e5224765586998b0f9aecfa2d790479cd668f28d7101dd",
@@ -1906,7 +1695,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ml/elasticsearch-grok-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "e6b6ef74174dec6b1c50d3cb6bf82d73413e56d9d038ddc7e06a26e1eb6fea14",
@@ -1915,7 +1703,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ml/jcodings-1.0.44.jar",
             combined! {
                 Kind::JarClassV1 => "4dd715e0832222e95234af07d22995a0cc40fdc7328ec88b355877d060650532",
@@ -1924,7 +1711,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ml/joni-2.1.29.jar",
             combined! {
                 Kind::JarRawV1 => "5f5c1894e9780c6e408de3baeee7585886d8fbc3ae73b6af25722912567cdcff",
@@ -1933,7 +1719,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ml/super-csv-2.4.0.jar",
             combined! {
                 Kind::RawSha256 => "cb3cc48f3cb521a6eb90b2984f98935dce4f184d43ff4aba052f4749a4131d4c",
@@ -1942,7 +1727,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ml/x-pack-ml-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "1f02281d123f5050f74ca06c2c6b09952d80e347242da3bb2e473748c978b228",
@@ -1951,7 +1735,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-monitoring/elasticsearch-rest-client-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "91cfab57383a284c826a6dd513dcfba309aea0b473af18582552c18c8b5dd078",
@@ -1960,7 +1743,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-monitoring/elasticsearch-rest-client-sniffer-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "a5a81a9ffd9a575102053cba386bac255c70e5ab03a94ae1173526512b658c46",
@@ -1969,7 +1751,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-monitoring/x-pack-monitoring-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "d191f4f8e082bebbbed6743d4edc5c6ee1db569bbc838174bf5c9296ed68f5ea",
@@ -1978,7 +1759,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ql/antlr4-runtime-4.9.2.jar",
             combined! {
                 Kind::RawSha256 => "120053628dd598d43cb7ac6b9ecc72529dfa5a5fd3292d37cf638a81cc0075f6",
@@ -1987,7 +1767,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-ql/x-pack-ql-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "cc0d937d568bd98c0cffb80bd085d691ff9a3e27b4234f5541bf0789b76f600b",
@@ -1996,7 +1775,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-rollup/x-pack-rollup-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "c42df93fbb23310c34e90ab815ee79e59331b5551c4acb75b3d89ae18c6cacd9",
@@ -2005,7 +1783,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/accessors-smart-2.4.2.jar",
             combined! {
                 Kind::JarClassV1 => "70e28536d92a7e3063561f9eec510155d1051e450a264890571ffc5b1ba3c14d",
@@ -2014,7 +1791,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/asm-9.1.jar",
             combined! {
                 Kind::JarRawV1 => "d7e561bcafa78354f3934bbb4365f6f84236f02e2c0e2d9291ce8b2ffaf57f2f",
@@ -2023,7 +1799,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/cryptacular-1.2.4.jar",
             combined! {
                 Kind::JarClassV1 => "cc49125e2781a6a2e6fa1b2202d2f3ec7879ec0df717421e4108dd24b5d97309",
@@ -2032,7 +1807,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/guava-19.0.jar",
             combined! {
                 Kind::JarClassV1 => "95aee2084dbaf92ffcfa933d62f8a69a1af9a0db979356798ffe650f91d8414f",
@@ -2041,7 +1815,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/httpclient-cache-4.5.14.jar",
             combined! {
                 Kind::JarRawV1 => "ffde1edd6702e96aebfe585087814ae660a8db31ec63f533451c5df6ff04c4e6",
@@ -2050,7 +1823,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/jakarta.mail-1.6.3.jar",
             combined! {
                 Kind::JarRawV1 => "2167df3dfa9546ff745eae83c51e1cb25cd9c33c490e80a496a9582d829d5196",
@@ -2059,7 +1831,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/java-support-7.5.1.jar",
             combined! {
                 Kind::JarRawV1 => "ae8aaf32556f051325cd97ec33e4a01ae46df0b44b17cca32ed706b4786a755b",
@@ -2068,7 +1839,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/jcip-annotations-1.0.jar",
             combined! {
                 Kind::RawSha256 => "be5805392060c71474bf6c9a67a099471274d30b83eef84bfc4e0889a4f1dcc0",
@@ -2077,7 +1847,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/json-smart-2.4.10.jar",
             combined! {
                 Kind::JarRawV1 => "eb6ff90c2bb1872387e04577ee3b96679e2a073f9df90dce1cb024e4fe8d2f9c",
@@ -2086,7 +1855,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/lang-tag-1.4.4.jar",
             combined! {
                 Kind::JarClassV1 => "204546610f8e9e399c584e89bd20834fa03bc6d86046325919aeee15e3c98fc9",
@@ -2095,7 +1863,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/log4j-slf4j-impl-2.17.1.jar",
             combined! {
                 Kind::JarClassV1 => "9ad437ba29a9f5f245d4ccd6fc067aaa9a4e02dc7c677d61ffbc395738971862",
@@ -2104,7 +1871,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/metrics-core-3.2.2.jar",
             combined! {
                 Kind::JarClassV1 => "128a2a3a64c5bb2ac06d949b38774d0b6db58aeb330caaed07fb50b28711be78",
@@ -2113,7 +1879,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/nimbus-jose-jwt-9.23.jar",
             combined! {
                 Kind::JarRawV1 => "199f48a802f62d78028f038765bd4b684a6ca5af347e979f3627c65f73dd81da",
@@ -2122,7 +1887,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/oauth2-oidc-sdk-9.37.jar",
             combined! {
                 Kind::JarClassV1 => "c967ede438d8736f6b089491f136b5ab1dc51ad109f87b312fb8cfdbb05c87ff",
@@ -2131,7 +1895,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-core-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "da8c91082b618bd02bd6300c688b9336926ba49b6206b3fefb421dccee288182",
@@ -2140,7 +1903,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-messaging-api-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "4daec9276f140b72d79e9ded314c07077bfb51d67d13207832edd282ef0d95eb",
@@ -2149,7 +1911,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-messaging-impl-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "7cd6075a4590120d7863a83d6619c3f094776c6ebe542a33d48ca4901d70cb50",
@@ -2158,7 +1919,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-profile-api-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "bdb3ba259b74280ee850e3e4f9d123190517a1a839e3ae55ef150a55c6313546",
@@ -2167,7 +1927,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-profile-impl-3.4.5.jar",
             combined! {
                 Kind::JarClassV1 => "ba5131ef4582ab0810e11ea7c1cad42e5bf903a533aecd19f795242951293b62",
@@ -2176,7 +1935,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-saml-api-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "34430593937be9c9fc61cda99a8215ced2020ed044d15c9dccf0ef99f598d5ce",
@@ -2185,7 +1943,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-saml-impl-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "4e53cdbb3e95664535ed0070164ee074ea164336ce6a31beb3d1356385253051",
@@ -2194,7 +1951,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-security-api-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "d625acaff8578c41b676baa4d203af41b633331cd7d275bbb05f17ff660f0a56",
@@ -2203,7 +1959,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-security-impl-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "e18bdf84f021b3737c53e2d27bb4853e944abb3365a792f710da1571df9832a0",
@@ -2212,7 +1967,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-soap-api-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "877ddbbbd5f832578308591e3835fe771cc75775d0c5cf8da8edba6ffd507c6e",
@@ -2221,7 +1975,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-soap-impl-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "19190db7c20a5a7a5addad86e0c2097d3eda8b1bc651b00646a63e52ab6ccdf2",
@@ -2230,7 +1983,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-storage-api-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "6d76e7f3725086e63a4f944eb369e5e64b32600e1c6a90051467317939f14ff0",
@@ -2239,7 +1991,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-storage-impl-3.4.5.jar",
             combined! {
                 Kind::JarClassV1 => "b7259ee454e65a560d3458d429b6dd815cebea01258e7208d81d64acae1538e0",
@@ -2248,7 +1999,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-xmlsec-api-3.4.5.jar",
             combined! {
                 Kind::JarRawV1 => "a42ca8103feba47d644962e1102c07753fcf8f4f38191afb7e06d73c9a3d1c91",
@@ -2257,7 +2007,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/opensaml-xmlsec-impl-3.4.5.jar",
             combined! {
                 Kind::RawSha256 => "6bb4be41b1aa9e9f6a122504b77cc85a16f11427fb9ecd6d096bbaf0e5a882df",
@@ -2266,7 +2015,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/slf4j-api-1.6.2.jar",
             combined! {
                 Kind::RawSha256 => "c26413df1741466d8bec549a4b7f6480acb2ac928b156be8c5e3feaf9cba1b59",
@@ -2275,7 +2023,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/x-pack-security-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "9123967f868507237f4a3986def5671d52097ca2c9c2f6aaefa0c70a39c8032c",
@@ -2284,7 +2031,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-security/xmlsec-2.1.4.jar",
             combined! {
                 Kind::JarClassV1 => "16fcca024d61653302b7ae4a4a3997eae7e93a7c6a34a8f6fe8bed60de02cff0",
@@ -2293,7 +2039,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-shutdown/x-pack-shutdown-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "ea93e2f4e3d48ca5b799295c101de93879b904c1d78c4bab32650de23d2f41a5",
@@ -2302,7 +2047,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-sql/aggs-matrix-stats-client-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "be8acdb650fdc844979f14fdd4ec70da12f67e023fa174bd0c6fa10ce3ec294e",
@@ -2311,7 +2055,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-sql/sql-action-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "78af2f180170efb9d454e5baa3dadaed9a53d2f575a4bfd1bf16851969585f00",
@@ -2320,7 +2063,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-sql/sql-proto-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "6151486c2370ce74eaea561a52ad9c36f91b9be0ac1fe3804fb2a529c6c47e3c",
@@ -2329,7 +2071,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-sql/x-pack-sql-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "23cbe12cecc63ff0a586e5ae906419cf8dd336d39b16ab089b23a4ec0f51ca7e",
@@ -2338,7 +2079,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-stack/x-pack-stack-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "6404b9954751127d80267951a9e76308a1c216b33b270d71139711168c51e5c2",
@@ -2347,7 +2087,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-text-structure/elasticsearch-grok-7.17.17.jar",
             combined! {
                 Kind::RawSha256 => "a2267aef94e0a815521d5cb233aacb512719cd96721f64f056dbc085397f761e",
@@ -2356,7 +2095,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-text-structure/icu4j-62.1.jar",
             combined! {
                 Kind::JarClassV1 => "ed02dfc3dd7375901fdb24aa1fbdf17da49eed182f38d34bf5c8eccc1c53e16e",
@@ -2365,7 +2103,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-text-structure/jcodings-1.0.44.jar",
             combined! {
                 Kind::RawSha256 => "49190d6ad09056de57d7ed41ed5b4b105e033557b5dd170702decdcf05ee341a",
@@ -2374,7 +2111,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-text-structure/joni-2.1.29.jar",
             combined! {
                 Kind::RawSha256 => "aa4b71415682f3d7fa44083cd94a9ec48478ec3b9c30947b4152913d41b1004d",
@@ -2383,7 +2119,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-text-structure/super-csv-2.4.0.jar",
             combined! {
                 Kind::RawSha256 => "cb3cc48f3cb521a6eb90b2984f98935dce4f184d43ff4aba052f4749a4131d4c",
@@ -2392,7 +2127,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-text-structure/x-pack-text-structure-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "ff7041896bc9d1516df38e07a66bc63b57e643cd057d5091e84233e071dcd365",
@@ -2401,7 +2135,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-voting-only-node/x-pack-voting-only-node-7.17.17.jar",
             combined! {
                 Kind::JarClassV1 => "942a64c517ea90df3b87c079e3661ab2250374d12639eba72fc76abd51a7f3c9",
@@ -2410,7 +2143,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-watcher/failureaccess-1.0.1.jar",
             combined! {
                 Kind::JarClassV1 => "98aebe7db02141ace8153c2e3dda72bf4657ce4623fbfea2e58e2b16560eb16e",
@@ -2419,7 +2151,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-watcher/guava-32.0.1-jre.jar",
             combined! {
                 Kind::JarRawV1 => "68ad8c8bd943eeb8316e2abb86a0ac0b0d691bb642a94a28e8035cd21becee7a",
@@ -2428,7 +2159,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-watcher/jakarta.activation-1.2.1.jar",
             combined! {
                 Kind::RawSha256 => "d84d4ba8b55cdb7fdcbb885e6939386367433f56f5ab8cfdc302a7c3587fa92b",
@@ -2437,7 +2167,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-watcher/jakarta.mail-1.6.4.jar",
             combined! {
                 Kind::JarRawV1 => "be0291c7ac8dcbbb240c676ee0bf2f616f29d5deeb21b5d8e8df7784e87d5ce3",
@@ -2446,7 +2175,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-watcher/owasp-java-html-sanitizer-20211018.2.jar",
             combined! {
                 Kind::RawSha256 => "48234cd74e35d91a31a683820a35b5b6d11b55527f32a5b162c6757408b95d7a",
@@ -2455,7 +2183,6 @@ pub fn list() -> Vec<DiscoveredJar> {
             },
         ),
         DiscoveredJar::new(
-            "blobs/sha256/390eb454274e3c98e4769be1c5eb9d363374ea23e28bf6ba8ad0adb56fe4b888",
             "usr/share/elasticsearch/modules/x-pack-watcher/x-pack-watcher-7.17.17.jar",
             combined! {
                 Kind::JarRawV1 => "d967ee4d0ed330abf1799e369c5dade2d1cd523e83c269dab86a2e171e5e526f",

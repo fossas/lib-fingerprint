@@ -70,7 +70,19 @@ pub enum Error {
 /// When deserializing this type, the deserialized value must match a known kind;
 /// otherwise a deserialization error is returned.
 #[derive(
-    Copy, Clone, Eq, PartialEq, Hash, Debug, Serialize, Display, AsRefStr, EnumIter, VariantNames,
+    Copy,
+    Clone,
+    Eq,
+    PartialEq,
+    PartialOrd,
+    Ord,
+    Hash,
+    Debug,
+    Serialize,
+    Display,
+    AsRefStr,
+    EnumIter,
+    VariantNames,
 )]
 #[non_exhaustive]
 pub enum Kind {
