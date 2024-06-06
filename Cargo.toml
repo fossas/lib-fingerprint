@@ -31,7 +31,7 @@ hex = ["dep:hex"]
 
 [dependencies]
 getset = "0.1.2"
-iter-read = "0.3.1"
+iter-read = "1.0.1"
 serde = { version = "1.0.140", features = ["derive"] }
 thiserror = "1.0.31"
 sha2 = "0.10.6"
