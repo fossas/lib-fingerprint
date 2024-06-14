@@ -1,5 +1,6 @@
 use std::io::{BufRead, Seek};
 
+use sha1::Sha1;
 use sha2::{Digest, Sha256};
 use tap::Pipe;
 use tracing::warn;
@@ -20,6 +21,15 @@ pub fn raw(stream: impl BufRead + Seek) -> Result<Option<Fingerprint>, Error> {
             }
         },
     }
+}
+
+/// Fingerprint the java archive the same way as Maven Central.
+#[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
+pub fn maven_central(mut stream: impl BufRead + Seek) -> Result<Option<Fingerprint>, Error> {
+    let mut hasher = Sha1::new();
+    std::io::copy(&mut stream, &mut hasher)?;
+    let content = Content::from_digest(hasher);
+    Ok(Some(Fingerprint::new(Kind::JarMavenCentralV1, content)))
 }
 
 /// Fingerprint class files inside a java archive (a JAR).

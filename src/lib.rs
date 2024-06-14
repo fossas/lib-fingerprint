@@ -123,6 +123,15 @@ pub enum Kind {
     #[strum(serialize = "v1.raw.jar")]
     JarRawV1,
 
+    /// Represents a fingerprint derived by hashing the raw contents of a JAR file in the same manner
+    /// as Maven Central. The idea is that such fingerprints can then be looked up via the
+    /// Maven Central REST API as a fallback to our own indexing.
+    ///
+    /// Specifically:
+    /// - The content of the JAR file is hashed as-is using the sha1 algorithm.
+    #[strum(serialize = "v1.mavencentral.jar")]
+    JarMavenCentralV1,
+
     /// Represents a fingerprint derived by hashing the raw contents of a JAR file with the SHA256 algorithm
     /// in a platform-independent manner.
     ///
@@ -323,6 +332,7 @@ impl Fingerprint {
             Kind::CommentStrippedSha256 => fingerprint::text::comment_stripped(stream),
             Kind::JarRawV1 => fingerprint::jar::raw(stream),
             Kind::JarClassV1 => fingerprint::jar::class(stream),
+            Kind::JarMavenCentralV1 => fingerprint::jar::maven_central(stream),
         }
     }
 
