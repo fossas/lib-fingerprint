@@ -9,12 +9,14 @@ use std::{
     fs::File,
     io::{BufRead, BufReader, Cursor, Seek},
     path::Path,
+    thread::ScopedJoinHandle,
 };
 
 use getset::Getters;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use strum::{AsRefStr, Display, EnumIter, IntoEnumIterator, VariantNames};
+use tap::Pipe;
 use thiserror::Error;
 
 mod fingerprint;
@@ -171,7 +173,7 @@ impl<'de> Deserialize<'de> for Kind {
 }
 
 /// An array of bytes representing a fingerprint's content.
-#[derive(Clone, Eq, PartialEq, Hash, Default)]
+#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Default)]
 pub struct Content(Vec<u8>);
 
 impl Content {
@@ -400,7 +402,11 @@ impl<K: Into<Kind>, C: Into<Content>> From<(K, C)> for Fingerprint {
 pub struct Combined(HashMap<Kind, Content>);
 
 impl Combined {
-    /// Fingerprint the provided stream (typically a file handle) with all fingerprint [`Kind`]s.
+    /// Fingerprint the provided stream with all fingerprint [`Kind`]s.
+    ///
+    /// Note: this forces fingerprinting to be performed serially
+    /// since the stream has to be seeked backwards for each fingerprinter;
+    /// if this is not desired consider [`Combined::from_file`] or [`Combined::from_buffer`].
     #[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
     pub fn from_stream(mut stream: impl BufRead + Seek) -> Result<Self, Error> {
         let mut fingerprints = Vec::new();
@@ -417,10 +423,22 @@ impl Combined {
     }
 
     /// Fingerprint the provided file with all fingerprint [`Kind`]s.
+    ///
+    /// Note: this opens the file multiple times, once for each kind of fingerprint,
+    /// then runs each fingerprinter in its own thread.
+    /// If this is not desired consider [`Combined::from_stream`] or [`Combined::from_buffer`].
     #[tracing::instrument(level = tracing::Level::DEBUG, ret)]
     pub fn from_file(path: &Path) -> Result<Self, Error> {
-        let mut file = BufReader::new(File::open(path)?);
-        Self::from_stream(&mut file)
+        std::thread::scope(|scope| {
+            let handles = Kind::iter()
+                .map(|kind| scope.spawn(move || Fingerprint::from_file(kind, path)))
+                .collect::<Vec<_>>();
+
+            match collapse_handles(handles) {
+                Ok(fps) => fps.into_iter().flatten().pipe(Combined::from).pipe(Ok),
+                Err(err) => Err(err),
+            }
+        })
     }
 
     /// Fingerprint the provided buffer with all fingerprint [`Kind`]s.
@@ -435,8 +453,13 @@ impl Combined {
     /// of errors in the future it isn't a breaking change.
     #[tracing::instrument(level = tracing::Level::DEBUG, fields(buf = %buf.as_ref().len()), ret)]
     pub fn from_buffer(buf: impl AsRef<[u8]>) -> Result<Self, Error> {
-        let mut content = Cursor::new(buf);
-        Self::from_stream(&mut content)
+        Kind::iter()
+            .map(|kind| Fingerprint::from_buffer(kind, buf.as_ref()))
+            .collect::<Result<Vec<_>, _>>()?
+            .into_iter()
+            .flatten()
+            .pipe(Combined::from)
+            .pipe(Ok)
     }
 
     /// Create a new instance from a single fingerprint.
@@ -471,4 +494,18 @@ impl<I: IntoIterator<Item = F>, F: Into<Fingerprint>> From<I> for Combined {
                 .collect(),
         )
     }
+}
+
+fn collapse_handles<T, E>(handles: Vec<ScopedJoinHandle<'_, Result<T, E>>>) -> Result<Vec<T>, E> {
+    let mut collected = Vec::new();
+    for handle in handles {
+        match handle.join() {
+            Err(err) => std::panic::resume_unwind(err),
+            Ok(operation) => match operation {
+                Ok(inner) => collected.push(inner),
+                Err(err) => return Err(err),
+            },
+        }
+    }
+    Ok(collected)
 }
