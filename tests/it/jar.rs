@@ -6,7 +6,7 @@
 //! ```
 
 use std::{
-    collections::{HashMap, HashSet},
+    collections::HashSet,
     fs::File,
     io::Read,
     path::{Path, PathBuf},
@@ -18,7 +18,7 @@ use serde::Deserialize;
 use sha2::{Digest, Sha256};
 use tap::Pipe as _;
 use tar::Entry;
-use tracing::{debug, info_span, trace};
+use tracing::{debug, info, info_span};
 
 pub mod expect;
 
@@ -70,18 +70,16 @@ fn jars_in_container(container: &str) -> Vec<DiscoveredJar> {
 
     // Force the `linux/amd64` platform when pulling, since that's what CI runs in.
     // This way local tests work even on M-series macOS, and CI works even though it's linux.
-    debug!("pulling container");
+    info!("pulling container");
     xshell::cmd!(sh, "docker pull --platform linux/amd64 {container}")
-        .quiet()
         .run()
         .expect("pull container");
 
     let dir = tempfile::tempdir().expect("create temp directory");
     let container_file = lazy_regex::regex_replace_all!(r"[^A-Za-z0-9_]", container, "_");
     let destination = dir.path().join(container_file.as_ref());
-    debug!(?destination, "saving container to disk");
+    info!(?destination, "saving container to disk");
     xshell::cmd!(sh, "docker save {container} -o {destination}")
-        .quiet()
         .run()
         .expect("save container");
 
@@ -90,7 +88,7 @@ fn jars_in_container(container: &str) -> Vec<DiscoveredJar> {
     }
 
     // Visit each layer and fingerprint the JARs within.
-    debug!("inspecting container");
+    info!("inspecting container");
     let layers = list_container_layers(&destination);
     let archive = File::open(&destination).expect("open file");
     let mut discoveries = Vec::new();
@@ -98,7 +96,7 @@ fn jars_in_container(container: &str) -> Vec<DiscoveredJar> {
         let entry = entry.expect("read entry");
         let path = entry.path().expect("read path");
         if !layers.contains(path.as_ref()) {
-            trace!(?path, "skipped: not a layer file");
+            debug!(?path, "skipped: not a layer file");
             continue;
         }
 
@@ -118,7 +116,7 @@ fn jars_in_layer(layer: PathBuf, entry: Entry<impl Read>) -> Vec<DiscoveredJar> 
         let entry = entry.expect("read entry");
         let path = entry.path().expect("read path");
         if !path.to_string_lossy().ends_with(".jar") {
-            trace!(?path, "skipped: not a jar file");
+            debug!(?path, "skipped: not a jar file");
             continue;
         }
 
@@ -146,11 +144,11 @@ fn list_container_layers(container: &Path) -> HashSet<PathBuf> {
         let entry = entry.expect("read entry");
         let path = entry.path().expect("read path");
         if !path.ends_with("manifest.json") {
-            trace!(?path, "skipped: not a manifest file");
+            debug!(?path, "skipped: not a manifest file");
             continue;
         }
 
-        debug!(?path, "extracting manifests for image");
+        info!(?path, "extracting manifests for image");
         let manifests: Vec<OciManifest> = serde_json::from_reader(entry).expect("read manifest");
         for manifest in manifests {
             layers.extend(manifest.layers);
@@ -194,17 +192,44 @@ impl DiscoveredJar {
 
 /// Special case of [`DiscoveredJar`] for comparing
 /// in a platform-independent manner.
-#[derive(Debug, PartialEq, Eq)]
 struct CmpJar {
     path: String,
-    fingerprint: HashMap<Kind, Content>,
+    fingerprint: Vec<CmpFingerprint>,
+    hash: String,
 }
+
+impl std::fmt::Debug for CmpJar {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("CmpJar")
+            .field("path", &self.path)
+            .field("fingerprint", &self.fingerprint)
+            .finish()
+    }
+}
+
+impl std::cmp::PartialEq for CmpJar {
+    fn eq(&self, other: &Self) -> bool {
+        self.path == other.path && self.hash == other.hash
+    }
+}
+
+impl std::cmp::Eq for CmpJar {}
 
 impl From<DiscoveredJar> for CmpJar {
     fn from(jar: DiscoveredJar) -> Self {
+        let fingerprint = jar
+            .fingerprint
+            .into_inner()
+            .into_iter()
+            .map(CmpFingerprint::from)
+            .sorted()
+            .collect_vec();
+        let hash = hash_kind_content(&fingerprint).pipe(hex::encode);
+
         Self {
             path: jar.path.to_string_lossy().to_string().replace('\\', "/"),
-            fingerprint: jar.fingerprint.into_inner(),
+            fingerprint,
+            hash,
         }
     }
 }
@@ -212,7 +237,7 @@ impl From<DiscoveredJar> for CmpJar {
 impl std::cmp::Ord for CmpJar {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         match alphanumeric_sort::compare_str(&self.path, &other.path) {
-            std::cmp::Ordering::Equal => order_kind_content(&self.fingerprint, &other.fingerprint),
+            std::cmp::Ordering::Equal => alphanumeric_sort::compare_str(&self.hash, &other.hash),
             ord => ord,
         }
     }
@@ -224,13 +249,23 @@ impl std::cmp::PartialOrd for CmpJar {
     }
 }
 
-fn order_kind_content(
-    a: &HashMap<Kind, Content>,
-    b: &HashMap<Kind, Content>,
-) -> std::cmp::Ordering {
-    let hash_a = hash_kind_content(a);
-    let hash_b = hash_kind_content(b);
-    hash_a.cmp(&hash_b)
+/// Special case of fingerprint for comparing in tests.
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct CmpFingerprint {
+    kind: Kind,
+    content: Content,
+}
+
+impl std::fmt::Debug for CmpFingerprint {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, r#"{:?} => "{:?}""#, self.kind, self.content)
+    }
+}
+
+impl From<(Kind, Content)> for CmpFingerprint {
+    fn from((kind, content): (Kind, Content)) -> Self {
+        Self { kind, content }
+    }
 }
 
 /// Generate a hash of the map:
@@ -240,11 +275,11 @@ fn order_kind_content(
 /// The intention isn't to make a _stable_ hash or anything,
 /// it's literally just to support ordering [`CmpJar`]
 /// in cases where the same path is read from multiple layers in an image.
-fn hash_kind_content(map: &HashMap<Kind, Content>) -> Vec<u8> {
-    map.iter()
-        .sorted_by(|(a, _), (b, _)| a.cmp(b))
-        .fold(Sha256::new(), |mut hasher, (_, v)| {
-            hasher.update(v.as_bytes());
+fn hash_kind_content(cmp: &[CmpFingerprint]) -> Vec<u8> {
+    cmp.iter()
+        .sorted_by(|a, b| a.cmp(b))
+        .fold(Sha256::new(), |mut hasher, cmp| {
+            hasher.update(cmp.content.as_bytes());
             hasher
         })
         .pipe(|hasher| hasher.finalize().as_slice().to_vec())

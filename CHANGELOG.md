@@ -1,4 +1,10 @@
 
+# v2.1.0
+
+- Adds new `Kind::JarMavenCentralV1` fingerprint.
+- Attempts to improve performance of file-based fingerprinting by paralellizing across threads.
+  - This was done now that we have several kinds of fingerprints, and we'll probably just keep adding more.
+
 # v2.0.0
 
 Refactored to the new Sparkle-based view of fingerprints.
