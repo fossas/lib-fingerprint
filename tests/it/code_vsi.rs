@@ -145,7 +145,7 @@ fn strum_serde_fingerprint_kind_serialization_matches() {
 
 #[test]
 fn serde_serialization_matches_external_contract() {
-    let mut serialized_strings = vec![
+    let expected_serializations_for_kinds = vec![
         "v1.class.jar",
         "v1.mavencentral.jar",
         "v1.raw.jar",
@@ -153,14 +153,20 @@ fn serde_serialization_matches_external_contract() {
         "sha_256",
     ]
     .into_iter()
-    .collect::<HashSet<&str>>();
+    .map(|s| s.to_string())
+    .collect::<HashSet<String>>();
+
+    let mut actual_serializations_for_kinds = HashSet::new();
 
     for kind in Kind::iter() {
         let json_value = serde_json::to_value(kind).expect("serde serialization");
-        let json = json_value.as_str().expect("get string");
+        let json = json_value.as_str().expect("get string").to_string();
 
-        serialized_strings.remove(json);
+        actual_serializations_for_kinds.insert(json);
     }
 
-    assert_eq!(serialized_strings, HashSet::new());
+    assert_eq!(
+        expected_serializations_for_kinds,
+        actual_serializations_for_kinds
+    );
 }
