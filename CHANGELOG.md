@@ -1,3 +1,6 @@
+# v3.0.0
+
+- Changes the Serde serialization of `Kind` to match Strum's.
 
 # v2.1.0
 

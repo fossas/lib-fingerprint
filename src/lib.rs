@@ -96,6 +96,7 @@ pub enum Kind {
     /// generally require specific circumstances: `CommentStrippedSHA256` requires that the file is text, and
     /// hypothetical future fingerprint kinds such as something based on an AST would require that the file is source code.
     #[strum(serialize = "sha_256")]
+    #[serde(rename = "sha_256")]
     RawSha256,
 
     /// Represents a fingerprint derived by hashing the contents of a file with the SHA256 algorithm
@@ -113,6 +114,7 @@ pub enum Kind {
     /// - Any sequence of multiple contiguous `\n` bytes are collapsed to a single `\n` byte.
     /// - The final `\n` byte is removed from the end of the stream if present.
     #[strum(serialize = "comment_stripped:sha_256")]
+    #[serde(rename = "comment_stripped:sha_256")]
     CommentStrippedSha256,
 
     /// Represents a fingerprint derived by hashing the raw contents of a JAR file with the SHA256 algorithm
@@ -123,6 +125,7 @@ pub enum Kind {
     /// - All the contents of these files are then hashed using SHA256.
     /// - If the contents of the files are text, `\r\n` sequences are converted to `\n`.
     #[strum(serialize = "v1.raw.jar")]
+    #[serde(rename = "v1.raw.jar")]
     JarRawV1,
 
     /// Represents a fingerprint derived by hashing the raw contents of a JAR file in the same manner
@@ -132,6 +135,7 @@ pub enum Kind {
     /// Specifically:
     /// - The content of the JAR file is hashed as-is using the sha1 algorithm.
     #[strum(serialize = "v1.mavencentral.jar")]
+    #[serde(rename = "v1.mavencentral.jar")]
     JarMavenCentralV1,
 
     /// Represents a fingerprint derived by hashing the raw contents of a JAR file with the SHA256 algorithm
@@ -142,6 +146,7 @@ pub enum Kind {
     /// - All the contents of these files are then hashed using SHA256.
     /// - If the contents of the files are text, `\r\n` sequences are converted to `\n`.
     #[strum(serialize = "v1.class.jar")]
+    #[serde(rename = "v1.class.jar")]
     JarClassV1,
 }
 
