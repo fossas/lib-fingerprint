@@ -162,8 +162,10 @@ fn serde_serialization_matches_external_contract() {
         let json_value = serde_json::to_value(kind).expect("serde serialization");
         let json = json_value.as_str().expect("get string").to_string();
 
-        // Check that the insert wasn't a duplicate.
-        assert!(actual_serializations_for_kinds.insert(json));
+        assert!(
+            actual_serializations_for_kinds.insert(json),
+            "serialized value for kind {kind:?} is duplicate"
+        );
     }
 
     assert_eq!(
