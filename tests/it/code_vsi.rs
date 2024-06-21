@@ -1,8 +1,11 @@
 //! Tests for plain code files using legacy VSI fingerprints.
 
+use std::collections::HashSet;
+
 use pretty_assertions::assert_eq;
 
 use fingerprint::*;
+use strum::IntoEnumIterator;
 
 /// Assert fingerprint for the named kind is the same as the fingerprint for the provided content.
 /// Comparison content (the "expected" fingerprint) is generated with [`hash`].
@@ -127,4 +130,46 @@ int main() {
             .expect("decode hex literal"),
     );
     assert_eq!(Some(&expected), combined.get(Kind::CommentStrippedSha256));
+}
+
+#[test]
+fn strum_serde_fingerprint_kind_serialization_matches() {
+    for kind in Kind::iter() {
+        let json_value = serde_json::to_value(kind).expect("serde serialization");
+        let json = json_value.as_str().expect("get string");
+        let strum = kind.to_string();
+
+        assert_eq!(json, strum);
+    }
+}
+
+#[test]
+fn serde_serialization_matches_external_contract() {
+    let expected_serializations_for_kinds = vec![
+        "v1.class.jar",
+        "v1.mavencentral.jar",
+        "v1.raw.jar",
+        "comment_stripped:sha_256",
+        "sha_256",
+    ]
+    .into_iter()
+    .map(|s| s.to_string())
+    .collect::<HashSet<String>>();
+
+    let mut actual_serializations_for_kinds = HashSet::new();
+
+    for kind in Kind::iter() {
+        let json_value = serde_json::to_value(kind).expect("serde serialization");
+        let json = json_value.as_str().expect("get string").to_string();
+
+        assert!(
+            actual_serializations_for_kinds.insert(json),
+            "serialized value for kind {kind:?} is duplicate"
+        );
+    }
+
+    assert_eq!(
+        expected_serializations_for_kinds,
+        actual_serializations_for_kinds
+    );
 }
