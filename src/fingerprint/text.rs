@@ -4,7 +4,7 @@ use iter_read::IterRead;
 use sha2::{Digest, Sha256};
 use tap::Pipe as _;
 
-use crate::{stream::ConvertCRLFToLF as _, Error, Fingerprint, Kind};
+use crate::{Error, Fingerprint, Kind, stream::ConvertCRLFToLF as _};
 
 use super::binary;
 

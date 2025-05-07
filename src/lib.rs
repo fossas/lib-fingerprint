@@ -218,7 +218,7 @@ impl std::fmt::Display for Content {
 ))]
 impl std::fmt::Display for Content {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        use base64::{prelude::*, Engine};
+        use base64::{Engine, prelude::*};
         write!(f, "{}", &BASE64_STANDARD.encode(&self.0))
     }
 }
@@ -274,7 +274,7 @@ impl Serialize for Content {
     where
         S: serde::Serializer,
     {
-        use base64::{prelude::*, Engine};
+        use base64::{Engine, prelude::*};
         serializer.serialize_str(&BASE64_STANDARD.encode(&self.0))
     }
 }
@@ -288,7 +288,7 @@ impl<'de> Deserialize<'de> for Content {
     where
         D: serde::Deserializer<'de>,
     {
-        use base64::{prelude::*, Engine};
+        use base64::{Engine, prelude::*};
         let s = String::deserialize(deserializer)?;
         let b = BASE64_STANDARD
             .decode(s)
