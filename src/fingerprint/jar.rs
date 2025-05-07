@@ -1,4 +1,4 @@
-use std::io::{BufRead, Seek};
+use std::io::{BufRead, Read, Seek};
 
 use sha1::Sha1;
 use sha2::{Digest, Sha256};
@@ -48,7 +48,7 @@ pub fn class(stream: impl BufRead + Seek) -> Result<Option<Fingerprint>, Error> 
 }
 
 #[tracing::instrument(level = tracing::Level::DEBUG, fields(entry = ?entry.name()), ret)]
-fn is_class_file(entry: &ZipFile<'_>) -> bool {
+fn is_class_file<R: Read>(entry: &ZipFile<'_, R>) -> bool {
     // If this becomes a problem in the future we can use the magic number instead:
     // https://en.wikipedia.org/wiki/Java_class_file#Magic_Number
     entry.name().ends_with(".class")
@@ -57,10 +57,10 @@ fn is_class_file(entry: &ZipFile<'_>) -> bool {
 // Due to https://github.com/zip-rs/zip2/issues/178 we are required to use the `Seek` bound.
 // tl;dr: older Java versions create JARs that do not work in streaming mode.
 #[tracing::instrument(level = tracing::Level::DEBUG, skip_all, fields(kind), ret)]
-fn files(
+fn files<R: BufRead + Seek>(
     kind: Kind,
-    stream: impl BufRead + Seek,
-    include: impl Fn(&ZipFile<'_>) -> bool,
+    stream: R,
+    include: impl Fn(&ZipFile<'_, R>) -> bool,
 ) -> zip::result::ZipResult<Option<Fingerprint>> {
     let mut files = Vec::new();
     let mut archive = zip::ZipArchive::new(stream)?;
@@ -79,7 +79,7 @@ fn files(
 }
 
 #[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
-fn file(mut entry: ZipFile<'_>) -> zip::result::ZipResult<(String, Content)> {
+fn file<R: Read>(mut entry: ZipFile<'_, R>) -> zip::result::ZipResult<(String, Content)> {
     let name = entry.name().to_string();
     let mut hasher = Sha256::new();
     std::io::copy(&mut entry, &mut hasher)?;
