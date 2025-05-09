@@ -274,7 +274,7 @@ impl Serialize for Content {
     where
         S: serde::Serializer,
     {
-        use base64::{Engine, prelude::*};
+        use base64::prelude::*;
         serializer.serialize_str(&BASE64_STANDARD.encode(&self.0))
     }
 }
@@ -288,7 +288,7 @@ impl<'de> Deserialize<'de> for Content {
     where
         D: serde::Deserializer<'de>,
     {
-        use base64::{Engine, prelude::*};
+        use base64::prelude::*;
         let s = String::deserialize(deserializer)?;
         let b = BASE64_STANDARD
             .decode(s)
