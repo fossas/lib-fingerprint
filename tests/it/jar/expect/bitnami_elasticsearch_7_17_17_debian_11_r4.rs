@@ -2544,5 +2544,5 @@ pub fn list() -> Vec<DiscoveredJar> {
                 Kind::RawSha256 => "808c30fd24ff3be4587464e804b4a1ab9a7b5b3a94fb9bd4cbe4bb28a9cb0f49",
             },
         ),
-        ]
+    ]
 }
