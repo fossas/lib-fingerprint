@@ -17,6 +17,14 @@ updates:
       rollup:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "zip"
+        # We want to avoid upgrading zip > 3.X as it causes dependency conflicts when used in one of FOSSA's
+        # private code-bases.
+        # TODO: Validate that this is still necessary after June 2026
+        # See https://teamfossa.slack.com/archives/C039KE5ERNE/p1750981935221269
+        versions: [ ">=4.0.0" ]
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
