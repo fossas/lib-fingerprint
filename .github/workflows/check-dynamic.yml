@@ -33,7 +33,7 @@ jobs:
         lfs: true
     - uses: dtolnay/rust-toolchain@stable
     - uses: taiki-e/install-action@nextest
-    - uses: Swatinem/rust-cache@v2.7.8
+    - uses: Swatinem/rust-cache@v2.8.0
       with:
         key: ${{ matrix.settings.host }}
     - run: ${{ matrix.settings.setup }}
