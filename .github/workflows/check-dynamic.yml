@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     name: test / ${{ matrix.settings.host }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         lfs: true
     - uses: dtolnay/rust-toolchain@stable
