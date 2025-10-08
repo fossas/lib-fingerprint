@@ -36,9 +36,10 @@ where
             Ok(byte) => {
                 if byte == CR_CHAR
                     && let Ok(next) = self.iter.peek()?
-                        && next == &LF_CHAR {
-                            return self.next();
-                        }
+                    && next == &LF_CHAR
+                {
+                    return self.next();
+                }
                 Some(Ok(byte))
             }
             Err(e) => Some(Err(e)),
