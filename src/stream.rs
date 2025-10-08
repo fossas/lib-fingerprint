@@ -34,12 +34,11 @@ where
         // which then would have had its trailing `\r` dropped.
         match self.iter.next()? {
             Ok(byte) => {
-                if byte == CR_CHAR {
-                    if let Ok(next) = self.iter.peek()? {
-                        if next == &LF_CHAR {
-                            return self.next();
-                        }
-                    }
+                if byte == CR_CHAR
+                    && let Ok(next) = self.iter.peek()?
+                    && next == &LF_CHAR
+                {
+                    return self.next();
                 }
                 Some(Ok(byte))
             }

@@ -45,7 +45,7 @@ fn docker_elasticsearch_7_17_17() {
 #[test_log::test]
 #[cfg_attr(not(feature = "docker-tests"), ignore = "docker tests not enabled")]
 fn docker_bitnami_elasticsearch_7_17_17_debian_11_r4() {
-    let jars = jars_in_container("bitnami/elasticsearch:7.17.7-debian-11-r4");
+    let jars = jars_in_container("bitnamilegacy/elasticsearch:7.17.7-debian-11-r4");
     assert_eq_jars!(
         expect::bitnami_elasticsearch_7_17_17_debian_11_r4::list(),
         jars
