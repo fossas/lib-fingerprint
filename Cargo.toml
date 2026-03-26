@@ -34,11 +34,11 @@ getset = "0.1.5"
 iter-read = "1.1.0"
 serde = { version = "1.0.219", features = ["derive"] }
 thiserror = "2.0.12"
-sha2 = "0.10.9"
+sha2 = "0.11.0"
 hex = { version = "0.4.3", optional = true }
 base64 = { version = "0.22.1", optional = true }
 zip = "3.0.0"
-strum = { version = "0.27.1", features = ["derive"] }
+strum = { version = "0.28.0", features = ["derive"] }
 alphanumeric-sort = "1.5.3"
 tap = "1.0.1"
 tracing = "0.1.41"
