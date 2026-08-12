@@ -1,5 +1,6 @@
 use std::io::{BufRead, BufReader, Cursor, Read as _, Write};
 
+use digest_io::IoWrapper;
 use iter_read::IterRead;
 use sha2::{Digest, Sha256};
 use tap::Pipe as _;
@@ -31,11 +32,11 @@ pub fn comment_stripped(mut stream: impl BufRead) -> Result<Option<Fingerprint>,
 
     // Chain the part of the stream already read to evaluate binary along with the rest of the stream.
     let mut stream = Cursor::new(read).chain(stream);
-    let mut hasher = Sha256::new();
+    let mut hasher = IoWrapper(Sha256::new());
     match content_stripped(&mut stream, &mut hasher) {
         Ok(_) => Ok(Some(Fingerprint::from_digest(
             Kind::CommentStrippedSha256,
-            hasher,
+            hasher.0,
         ))),
         Err(err) => {
             // The `io::Error` type is opaque.
