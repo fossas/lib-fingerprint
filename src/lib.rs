@@ -506,10 +506,7 @@ fn collapse_handles<T, E>(handles: Vec<ScopedJoinHandle<'_, Result<T, E>>>) -> R
     for handle in handles {
         match handle.join() {
             Err(err) => std::panic::resume_unwind(err),
-            Ok(operation) => match operation {
-                Ok(inner) => collected.push(inner),
-                Err(err) => return Err(err),
-            },
+            Ok(operation) => collected.push(operation?),
         }
     }
     Ok(collected)
