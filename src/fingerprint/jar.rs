@@ -1,5 +1,6 @@
 use std::io::{BufRead, Read, Seek};
 
+use digest_io::IoWrapper;
 use sha1::Sha1;
 use sha2::{Digest, Sha256};
 use tap::Pipe;
@@ -26,9 +27,9 @@ pub fn raw(stream: impl BufRead + Seek) -> Result<Option<Fingerprint>, Error> {
 /// Fingerprint the java archive the same way as Maven Central.
 #[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
 pub fn maven_central(mut stream: impl BufRead + Seek) -> Result<Option<Fingerprint>, Error> {
-    let mut hasher = Sha1::new();
+    let mut hasher = IoWrapper(Sha1::new());
     std::io::copy(&mut stream, &mut hasher)?;
-    let content = Content::from_digest(hasher);
+    let content = Content::from_digest(hasher.0);
     Ok(Some(Fingerprint::new(Kind::JarMavenCentralV1, content)))
 }
 
@@ -81,10 +82,10 @@ fn files<R: BufRead + Seek>(
 #[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
 fn file<R: Read>(mut entry: ZipFile<'_, R>) -> zip::result::ZipResult<(String, Content)> {
     let name = entry.name().to_string();
-    let mut hasher = Sha256::new();
+    let mut hasher = IoWrapper(Sha256::new());
     std::io::copy(&mut entry, &mut hasher)?;
 
-    let content = Content::from_digest(hasher);
+    let content = Content::from_digest(hasher.0);
     Ok((name, content))
 }
 

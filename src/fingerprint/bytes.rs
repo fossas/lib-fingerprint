@@ -1,5 +1,6 @@
 use std::io::{BufRead, Cursor, Read as _, Write};
 
+use digest_io::IoWrapper;
 use sha2::{Digest, Sha256};
 
 use crate::{Error, Fingerprint, Kind};
@@ -14,14 +15,14 @@ pub fn raw<R: BufRead>(mut stream: R) -> Result<Fingerprint, Error> {
 
     // Chain the part of the stream already read to evaluate binary along with the rest of the stream.
     let mut stream = Cursor::new(read).chain(stream);
-    let mut hasher = Sha256::new();
+    let mut hasher = IoWrapper(Sha256::new());
     if is_binary {
         content(&mut stream, &mut hasher)?;
     } else {
         text::content(&mut stream, &mut hasher)?;
     }
 
-    Ok(Fingerprint::from_digest(Kind::RawSha256, hasher))
+    Ok(Fingerprint::from_digest(Kind::RawSha256, hasher.0))
 }
 
 /// Reads the exact contents of a binary file without modification.
