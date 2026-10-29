@@ -51,8 +51,6 @@ pub fn class(stream: impl BufRead + Seek) -> Result<Option<Fingerprint>, Error> 
 fn is_class_file<R: Read>(entry: &ZipFile<'_, R>) -> bool {
     // If this becomes a problem in the future we can use the magic number instead:
     // https://en.wikipedia.org/wiki/Java_class_file#Magic_Number
-    // zip 9.x: `name()` returns `Result`; an unreadable name means we can't confirm
-    // it's a class file, so treat it as not one.
     match entry.name() {
         Ok(name) => name.ends_with(".class"),
         Err(_) => false,
