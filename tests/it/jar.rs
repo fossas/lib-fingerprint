@@ -8,17 +8,19 @@
 use std::{
     collections::HashSet,
     fs::File,
-    io::Read,
+    io::{Cursor, Read, Write},
     path::{Path, PathBuf},
 };
 
-use fingerprint::{Combined, Content, Kind};
+use alphanumeric_sort::compare_str;
+use fingerprint::{Combined, Content, Fingerprint, Kind};
 use itertools::Itertools;
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
 use tap::Pipe as _;
 use tar::Entry;
 use tracing::{debug, info, info_span};
+use zip::{CompressionMethod, write::SimpleFileOptions, ZipWriter};
 
 pub mod expect;
 
@@ -290,4 +292,69 @@ fn hash_kind_content(cmp: &[CmpFingerprint]) -> Vec<u8> {
 struct OciManifest {
     #[serde(rename = "Layers")]
     layers: Vec<PathBuf>,
+}
+
+/// Builds a ZIP/JAR in memory with the given `(name, payload)` entries using
+/// `Stored` compression and **no** UTF-8 global flag (the writer default), so each
+/// name is stored as raw bytes with the language-encoding bit unset.
+fn build_jar(entries: &[(&str, &[u8])]) -> Vec<u8> {
+    let mut zip = ZipWriter::new(Cursor::new(Vec::new()));
+    let options = SimpleFileOptions::default().compression_method(CompressionMethod::Stored);
+    for (name, payload) in entries {
+        zip.start_file(*name, options).expect("add entry to synthetic jar");
+        zip.write_all(payload).expect("write synthetic entry");
+    }
+    zip.finish().expect("finish synthetic jar").into_inner()
+}
+
+/// The JAR fingerprint hashes each entry's *content* in sorted-filename order, so a
+/// filename *decode* change only leaks out when it reorders entries. zip 9 decodes
+/// valid-UTF-8 bytes in unflagged entries as UTF-8, whereas zip 3 decoded those same
+/// bytes as CP437 — which reorders the pair below. This pins the zip-9 (UTF-8) behavior
+/// so a dependency downgrade or decode regression can't silently change fingerprints.
+///
+///   `\u{c3}\u{a9}.class` -> UTF-8 `é.class`  / CP437 `├\u{2310}.class`
+///   `\u{c3}\u{ac}.class` -> UTF-8 `ì.class`  / CP437 `├\u{00bc}.class`
+///   UTF-8 sort: é < ì ;  CP437 sort: ├\u{00bc} < ├\u{2310}  (reversed)
+#[test]
+fn jar_class_filename_decode_is_utf8_not_cp437() {
+    let archive = build_jar(&[
+        ("\u{00e9}.class", b"data1"), // written first
+        ("\u{00ec}.class", b"data2"), // written second
+    ]);
+
+    let got = Fingerprint::from_buffer(Kind::JarClassV1, &archive)
+        .expect("valid archive")
+        .expect("two class entries");
+
+    // Independent re-derivation of the fingerprint using zip-9 (UTF-8) names: each
+    // entry's content is Sha256(payload), and combine() folds those in filename order.
+    let mut entries: Vec<(&str, Vec<u8>)> = vec![
+        ("\u{00e9}.class", Sha256::digest(b"data1").to_vec()),
+        ("\u{00ec}.class", Sha256::digest(b"data2").to_vec()),
+    ];
+    entries.sort_by(|a, b| compare_str(a.0, b.0));
+    let mut combined = Sha256::new();
+    for (_, digest) in &entries {
+        combined.update(digest);
+    }
+    let expected = Content::from_digest(combined);
+    assert_eq!(got.content(), &expected, "names must decode as UTF-8 (zip 9)");
+
+    // Prove the test is actually sensitive: CP437 decoding reorders these entries,
+    // which must produce a different fingerprint.
+    let mut cp437: Vec<(&str, Vec<u8>)> = vec![
+        ("\u{251c}\u{2310}.class", Sha256::digest(b"data1").to_vec()),
+        ("\u{251c}\u{00bc}.class", Sha256::digest(b"data2").to_vec()),
+    ];
+    cp437.sort_by(|a, b| compare_str(a.0, b.0));
+    let mut combined_cp437 = Sha256::new();
+    for (_, digest) in &cp437 {
+        combined_cp437.update(digest);
+    }
+    assert_ne!(
+        *got.content(),
+        Content::from_digest(combined_cp437),
+        "CP437 decode must reorder entries and change the fingerprint"
+    );
 }
