@@ -51,7 +51,10 @@ pub fn class(stream: impl BufRead + Seek) -> Result<Option<Fingerprint>, Error> 
 fn is_class_file<R: Read>(entry: &ZipFile<'_, R>) -> bool {
     // If this becomes a problem in the future we can use the magic number instead:
     // https://en.wikipedia.org/wiki/Java_class_file#Magic_Number
-    entry.name().ends_with(".class")
+    match entry.name() {
+        Ok(name) => name.ends_with(".class"),
+        Err(_) => false,
+    }
 }
 
 // Due to https://github.com/zip-rs/zip2/issues/178 we are required to use the `Seek` bound.
@@ -80,7 +83,7 @@ fn files<R: BufRead + Seek>(
 
 #[tracing::instrument(level = tracing::Level::DEBUG, skip_all, ret)]
 fn file<R: Read>(mut entry: ZipFile<'_, R>) -> zip::result::ZipResult<(String, Content)> {
-    let name = entry.name().to_string();
+    let name = entry.name()?.to_string();
     let mut hasher = Sha256::new();
     std::io::copy(&mut entry, &mut hasher)?;
 
