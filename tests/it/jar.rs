@@ -20,7 +20,7 @@ use sha2::{Digest, Sha256};
 use tap::Pipe as _;
 use tar::Entry;
 use tracing::{debug, info, info_span};
-use zip::{CompressionMethod, write::SimpleFileOptions, ZipWriter};
+use zip::{CompressionMethod, ZipWriter, write::SimpleFileOptions};
 
 pub mod expect;
 
@@ -301,7 +301,8 @@ fn build_jar(entries: &[(&str, &[u8])]) -> Vec<u8> {
     let mut zip = ZipWriter::new(Cursor::new(Vec::new()));
     let options = SimpleFileOptions::default().compression_method(CompressionMethod::Stored);
     for (name, payload) in entries {
-        zip.start_file(*name, options).expect("add entry to synthetic jar");
+        zip.start_file(*name, options)
+            .expect("add entry to synthetic jar");
         zip.write_all(payload).expect("write synthetic entry");
     }
     zip.finish().expect("finish synthetic jar").into_inner()
@@ -339,7 +340,11 @@ fn jar_class_filename_decode_is_utf8_not_cp437() {
         combined.update(digest);
     }
     let expected = Content::from_digest(combined);
-    assert_eq!(got.content(), &expected, "names must decode as UTF-8 (zip 9)");
+    assert_eq!(
+        got.content(),
+        &expected,
+        "names must decode as UTF-8 (zip 9)"
+    );
 
     // Prove the test is actually sensitive: CP437 decoding reorders these entries,
     // which must produce a different fingerprint.
